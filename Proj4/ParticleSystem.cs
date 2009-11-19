@@ -8,7 +8,7 @@ namespace Aura
     /// particle system effects, create a class that encapsulates more than one
     /// ParticleSystem.
     /// </summary>
-    class ParticleSystem : IDrawable
+    public class ParticleSystem : IDrawable
     {
         /// <summary>
         /// An internal struct.  Particles could be represented using just an
@@ -18,14 +18,21 @@ namespace Aura
         /// </summary>
         protected struct Particle
         {
-            Vector3 position;
-            Vector3 velocity;
-            int life;
+            float3 position;
+            float3 velocity;
+            float life;
+        }
+
+        protected struct float3
+        {
+            float x;
+            float y;
+            float z;
         }
 
         protected List<Particle> particles = new List<Particle>();
         public Color4InterpolationHandler colorHandler;
-        public FloatInterpolationHandler velocityHandler;
+        public FloatInterpolationHandler speedHandler;
         public Vector3InterpolationHandler emissionHandler;
 
         public Vector3 constanceForce;
@@ -35,12 +42,12 @@ namespace Aura
             constanceForce = new Vector3(0,0,0);
         }
 
-        public void Update()
+        public virtual void Update()
         {
 
         }
 
-        public void Draw()
+        public virtual void Draw()
         {
             
         }

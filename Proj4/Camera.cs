@@ -9,7 +9,6 @@ namespace Aura
         public void ApplyCameraTransforms()
         {
             //Todo: Camera
-            //DO EET!
         }
     }
 
