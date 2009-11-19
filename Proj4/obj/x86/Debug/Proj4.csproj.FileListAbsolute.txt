@@ -1,0 +1,5 @@
+c:\documents and settings\administrator\my documents\visual studio 2010\Projects\Proj4\Proj4\obj\x86\Debug\ResolveAssemblyReference.cache
+c:\documents and settings\administrator\my documents\visual studio 2010\Projects\Proj4\Proj4\bin\Debug\Proj4.exe
+c:\documents and settings\administrator\my documents\visual studio 2010\Projects\Proj4\Proj4\bin\Debug\Proj4.pdb
+c:\documents and settings\administrator\my documents\visual studio 2010\Projects\Proj4\Proj4\obj\x86\Debug\Proj4.exe
+c:\documents and settings\administrator\my documents\visual studio 2010\Projects\Proj4\Proj4\obj\x86\Debug\Proj4.pdb
