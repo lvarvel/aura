@@ -4,7 +4,7 @@ using Tao.OpenGl;
 
 namespace Aura
 {
-    public struct Material
+    public class Material
     {
         Color4 Ambient;
         Color4 Diffuse;

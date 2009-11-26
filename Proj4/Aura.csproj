@@ -109,7 +109,11 @@
     <Compile Include="Material.cs" />
     <Compile Include="Mesh.cs" />
     <Compile Include="Object3D.cs" />
-    <Compile Include="ParticleSystem.cs" />
+    <Compile Include="ParticleAssets.cs" />
+    <Compile Include="ParticleSystem.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Pool.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Quaternion.cs" />
