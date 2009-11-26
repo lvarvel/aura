@@ -41,25 +41,61 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Tao.Cg, Version=2.0.0.0, Culture=neutral, PublicKeyToken=52fa5aba625fe731, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Deps\Tao.Cg.dll</HintPath>
+    </Reference>
     <Reference Include="Tao.DevIl, Version=1.6.8.3, Culture=neutral, PublicKeyToken=7ec4053013524957, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files\TaoFramework\bin\Tao.DevIl.dll</HintPath>
+      <HintPath>..\Deps\Tao.DevIl.dll</HintPath>
+    </Reference>
+    <Reference Include="Tao.FFmpeg, Version=0.4.9.0, Culture=neutral, PublicKeyToken=9c7a200e36c0094e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Deps\Tao.FFmpeg.dll</HintPath>
     </Reference>
     <Reference Include="Tao.FreeGlut, Version=2.4.0.2, Culture=neutral, PublicKeyToken=6e602a6ad6c0d06d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files\TaoFramework\bin\Tao.FreeGlut.dll</HintPath>
+      <HintPath>..\Deps\Tao.FreeGlut.dll</HintPath>
+    </Reference>
+    <Reference Include="Tao.FreeType, Version=2.3.5.0, Culture=neutral, PublicKeyToken=e499629dc69cd531, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Deps\Tao.FreeType.dll</HintPath>
+    </Reference>
+    <Reference Include="Tao.Glfw, Version=2.6.0.0, Culture=neutral, PublicKeyToken=2bb092b6587e4402, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Deps\Tao.Glfw.dll</HintPath>
     </Reference>
     <Reference Include="Tao.Lua, Version=5.1.3.0, Culture=neutral, PublicKeyToken=9c7a200e36c0094e, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files\TaoFramework\bin\Tao.Lua.dll</HintPath>
+      <HintPath>..\Deps\Tao.Lua.dll</HintPath>
     </Reference>
     <Reference Include="Tao.Ode, Version=0.9.0.0, Culture=neutral, PublicKeyToken=e499629dc69cd531, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files\TaoFramework\bin\Tao.Ode.dll</HintPath>
+      <HintPath>..\Deps\Tao.Ode.dll</HintPath>
+    </Reference>
+    <Reference Include="Tao.OpenAl, Version=1.1.0.1, Culture=neutral, PublicKeyToken=a7579dda88828311, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Deps\Tao.OpenAl.dll</HintPath>
     </Reference>
     <Reference Include="Tao.OpenGl, Version=2.1.0.12, Culture=neutral, PublicKeyToken=1ca010269a4501ef, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files\TaoFramework\bin\Tao.OpenGl.dll</HintPath>
+      <HintPath>..\Deps\Tao.OpenGl.dll</HintPath>
+    </Reference>
+    <Reference Include="Tao.PhysFs, Version=1.0.1.2, Culture=neutral, PublicKeyToken=9c7a200e36c0094e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Deps\Tao.PhysFs.dll</HintPath>
+    </Reference>
+    <Reference Include="Tao.Platform.Windows, Version=1.0.0.5, Culture=neutral, PublicKeyToken=701104b2da67a104, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Deps\Tao.Platform.Windows.dll</HintPath>
+    </Reference>
+    <Reference Include="Tao.Platform.X11, Version=1.0.0.0, Culture=neutral, PublicKeyToken=701104b2da67a104, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Deps\Tao.Platform.X11.dll</HintPath>
+    </Reference>
+    <Reference Include="Tao.Sdl, Version=1.2.13.0, Culture=neutral, PublicKeyToken=9c7a200e36c0094e, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Deps\Tao.Sdl.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -68,7 +104,6 @@
     <Compile Include="Camera.cs" />
     <Compile Include="Color.cs" />
     <Compile Include="ContentImporter.cs" />
-    <Compile Include="FloatRange.cs" />
     <Compile Include="IDrawable.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="Material.cs" />
@@ -78,6 +113,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Quaternion.cs" />
+    <Compile Include="Ranges.cs" />
     <Compile Include="Vector3.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
