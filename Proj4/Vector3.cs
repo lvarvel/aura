@@ -21,7 +21,7 @@ namespace Aura
         {
             data = new float[3];
         }
-        Vector3(ref Vector3 rhs)
+        public Vector3(ref Vector3 rhs)
         {
             data = new float[3];
             data[0] = rhs.data[0];

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Aura
 {
     /// <summary>
-    /// WARNING: QUATERNION IS NOT MATHEMATICALLY CORRECT. DON'T USE IT
+    /// WARNING: Quaternion might not work quite right yet, but it should
     /// </summary>
     public class Quaternion
     {
@@ -34,6 +34,14 @@ namespace Aura
             data[3] = (vn.Z * sinAngle);
             data[0] = (float)Math.Cos(theta);
         }
+        public Quaternion(float w, Vector3 i)
+        {
+            data[0] = w;
+            data[1] = i.X;
+            data[2] = i.Y;
+            data[3] = i.Z;
+        }
+
         Quaternion(ref Quaternion copy)
         {
             data = new float[4];
@@ -45,11 +53,11 @@ namespace Aura
 
         public static Quaternion operator *(Quaternion lhs, Quaternion rhs)
         {
-            return new Quaternion(lhs.data[0] * rhs.data[0] - lhs.data[1] * rhs.data[1] - lhs.data[2] * rhs.data[2] - lhs.data[3] * rhs.data[3],
-                lhs.data[0] * rhs.data[1] + lhs.data[1] * rhs.data[0] + lhs.data[2] * rhs.data[3] - lhs.data[3] * rhs.data[2],
-                lhs.data[0] * rhs.data[2] + lhs.data[2] * rhs.data[0] + lhs.data[3] * rhs.data[1] - lhs.data[1] * rhs.data[3],
-                lhs.data[0] * rhs.data[3] + lhs.data[3] * rhs.data[0] + lhs.data[1] * rhs.data[2] - lhs.data[2] * rhs.data[1]);
-
+                float w = lhs.data[0] * rhs.data[0] - lhs.data[1] * rhs.data[1] - lhs.data[2] * rhs.data[2] - lhs.data[3] * rhs.data[3];
+                float x = lhs.data[0] * rhs.data[1] + lhs.data[1] * rhs.data[0] + lhs.data[2] * rhs.data[3] - lhs.data[3] * rhs.data[2];
+                float y = lhs.data[0] * rhs.data[2] + lhs.data[2] * rhs.data[0] + lhs.data[3] * rhs.data[1] - lhs.data[1] * rhs.data[3];
+                float z = lhs.data[0] * rhs.data[3] + lhs.data[3] * rhs.data[0] + lhs.data[1] * rhs.data[2] - lhs.data[2] * rhs.data[1];
+                return new Quaternion(w, new Vector3(x, y, z));
         }
 
         public void normalise()
@@ -73,6 +81,28 @@ namespace Aura
             axis.Z = Z / scale;
             angle = (float)Math.Acos(W) * 2.0f;
         }
+        Quaternion conjugate()
+        {
+            return new Quaternion(W, new Vector3(-X, -Y, -Z));
+        }
+	    
+	    Vector3 transformVector(Vector3 vec)
+	    {
+		    Vector3 vn = new Vector3(ref vec);
+		    vn.normalize();
+
+            Quaternion vecQuat = new Quaternion();
+            Quaternion resQuat = new Quaternion();
+		    vecQuat.X = vn.X;
+		    vecQuat.Y = vn.Y;
+		    vecQuat.Z = vn.Z;
+		    vecQuat.W = 0.0f;
+ 
+		    resQuat = vecQuat * conjugate();
+		    resQuat = this * resQuat;
+ 
+		    return new Vector3(resQuat.X, resQuat.Y, resQuat.Z);
+	    }
 
         public float W
         {

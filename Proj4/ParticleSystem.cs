@@ -26,9 +26,9 @@ namespace Aura
         protected static Pool<Particle> particlePool = new Pool<Particle>();
         protected struct float3
         {
-            float x;
-            float y;
-            float z;
+            public float x;
+            public float y;
+            public float z;
         }
         #endregion
 
@@ -68,7 +68,7 @@ namespace Aura
 
         public virtual void Draw()
         {
-            DrawArgs args = new DrawArgs();
+            DrawArgs args = new DrawArgs(new Vector3(), Color4.White);
             foreach (Particle p in particles)
             {
                 float f = p.life / maxLife;
