@@ -6,10 +6,10 @@ namespace Aura
 {
     public class Material
     {
-        Color4 Ambient;
-        Color4 Diffuse;
-        Color4 Specular;
-        float SpecularExponent;
+        public Color4 Ambient;
+        public Color4 Diffuse;
+        public Color4 Specular;
+        public float SpecularExponent;
 
         public void ApplyMaterial()
         {
