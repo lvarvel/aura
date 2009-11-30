@@ -104,6 +104,7 @@
     <Compile Include="Camera.cs" />
     <Compile Include="Color.cs" />
     <Compile Include="ContentImporter.cs" />
+    <Compile Include="Engine.cs" />
     <Compile Include="IDrawable.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="Material.cs" />

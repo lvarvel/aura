@@ -16,7 +16,6 @@ namespace Aura
     {
         private static Dictionary<string, Camera> cameras = new Dictionary<string, Camera>();
         private static Camera current;
-        private static int defaultCount;
 
         public static Camera Current
         {

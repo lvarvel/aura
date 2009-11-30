@@ -5,3 +5,6 @@ F:\FinalProject\Proj4\Proj4\obj\x86\Debug\Proj4.pdb
 F:\FinalProject\Proj4\Proj4\obj\x86\Debug\ResolveAssemblyReference.cache
 H:\FinalProject\Proj4\Proj4\obj\x86\Debug\Proj4.exe
 H:\FinalProject\Proj4\Proj4\obj\x86\Debug\Proj4.pdb
+H:\FinalProject\Proj4\Proj4\obj\x86\Debug\ResolveAssemblyReference.cache
+H:\FinalProject\Proj4\Proj4\bin\Debug\Proj4.exe
+H:\FinalProject\Proj4\Proj4\bin\Debug\Proj4.pdb

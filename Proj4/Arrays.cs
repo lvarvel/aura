@@ -80,9 +80,9 @@ namespace Aura
             }
         }
 
-        public IEnumerator<Vector3> GetEnumerator()
+        public IEnumerator<float> GetEnumerator()
         {
-            return (IEnumerator<Vector3>)array.GetEnumerator();
+            return (IEnumerator<float>)array.GetEnumerator();
         }
 
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()

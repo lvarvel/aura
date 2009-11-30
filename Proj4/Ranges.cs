@@ -31,7 +31,7 @@ namespace Aura
         public Color4 First;
         public Color4 Second;
 
-        protected ColorRange();
+        protected ColorRange() { }
         public ColorRange(Color4 both)
         {
             First = (Color4)both.Clone();

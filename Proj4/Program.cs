@@ -9,7 +9,10 @@ namespace Aura
     {
         static void Main(string[] args)
         {
-            Tao.FreeGlut.Glut.glutInit();
+            using (Engine e = new Engine())
+            {
+                e.Run();
+            }
         }
     }
 }

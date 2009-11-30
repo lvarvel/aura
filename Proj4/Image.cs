@@ -5,7 +5,7 @@ using Tao.OpenGl;
 
 namespace Aura.Images
 {
-    class Texture : IDisposable
+    public class Texture : IDisposable
     {
         internal int glHandle;
 
