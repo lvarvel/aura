@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Aura
+namespace Aura.Content
 {
     /// <summary>
     /// Provides a standard interface for importing assets

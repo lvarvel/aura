@@ -58,11 +58,13 @@ namespace Aura
                 {
                     info = method;
                     object[] check = method.GetCustomAttributes(typeof(UnitTestMethod), false);
-                    UnitTestHandler test = Delegate.CreateDelegate(typeof(UnitTestHandler), method) as UnitTestHandler;
+                    
 
-                    if (test != null) test(results);
-                    results.ReportWarning("Method " + method.Name +
-                        " was marked to unit test but could not be converted into a UnitTestHandler delegate type.");
+                    if (check.Length > 0)
+                    {
+                        UnitTestHandler test = Delegate.CreateDelegate(typeof(UnitTestHandler), method) as UnitTestHandler;
+                        test(results);
+                    }
                 }
             }
             catch (Exception e)
@@ -127,6 +129,19 @@ namespace Aura
 
         public void WriteToFile()
         {
+            logFile.Write("Test ");
+            if (success)
+            {
+                logFile.WriteLine("success!");
+            }
+            else
+            {
+                logFile.WriteLine("failure!!!");
+            }
+            logFile.WriteLine("There are " + numberErrors + " errors.");
+            logFile.WriteLine("There are " + numberWarnings + " warnings.");
+            logFile.WriteLine();
+
             logFile.Write(resultBuffer);
             logFile.Flush();
         }

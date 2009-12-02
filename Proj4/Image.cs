@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Aura.Content;
 using Tao.DevIl;
 using Tao.OpenGl;
 
-namespace Aura.Images
+namespace Aura
 {
     public class Texture : IDisposable
     {

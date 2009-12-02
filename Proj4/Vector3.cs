@@ -6,9 +6,10 @@ namespace Aura
     /// <summary>
     /// Represents a 3 dimentional vector
     /// </summary>
+    [UnitTest(1)]
     public class Vector3
     {
-        float[] data;
+        private float[] data;
 
         public Vector3()
         {
@@ -20,6 +21,9 @@ namespace Aura
         public Vector3(float x, float y, float z)
         {
             data = new float[3];
+            data[0] = x;
+            data[1] = y;
+            data[2] = z;
         }
         public Vector3(ref Vector3 rhs)
         {
@@ -95,6 +99,38 @@ namespace Aura
             return result;
         }
 
+        [UnitTestMethod]
+        public static void TestVector(TestResults results)
+        {
+            results.ReportMessage("Begining Test 1: Vector3 addition test");
+            Vector3 v1 = new Vector3(0,0,0);
+            Vector3 v2 = new Vector3(1, 1, 1);
+            Vector3 v3 = v1 + v2;
+
+            if (v3.X != 1 || v3.Y != 1 || v3.Z != 1)
+            {
+                results.ReportError("Test 1 failed, V1+v2 != 1");
+            }
+            else
+            {
+                results.ReportMessage("Test 1 success.");
+            }
+
+            results.ReportMessage("Begining Test 2: Vector cross product");
+            v1 = new Vector3(1, 0, 0);
+            v2 = new Vector3(0, 1, 0);
+            v3 = v1.cross(v2);
+
+            if (v3.cross(v1) != v2)
+            {
+                results.ReportError("Test 2 failed, cross product equivelency rule violated");
+            }
+            else
+            {
+                results.ReportMessage("Test 2 success.");
+            }
+        }
+
         public float X
         {
             get { return data[0]; }
@@ -109,6 +145,11 @@ namespace Aura
         {
             get { return data[2]; }
             set { data[2] = value; }
+        }
+
+        public override string ToString()
+        {
+            return "(" + X + "," + Y + "," + Z + ")";
         }
     }
 

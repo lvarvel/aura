@@ -103,8 +103,10 @@
     <Compile Include="Billboard.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="Color.cs" />
-    <Compile Include="ContentImporter.cs" />
+    <Compile Include="Content\ContentImporter.cs" />
+    <Compile Include="Content\Descriptor.cs" />
     <Compile Include="Engine.cs" />
+    <Compile Include="Engine.Input.cs" />
     <Compile Include="IDrawable.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="Material.cs" />
@@ -121,7 +123,9 @@
     <Compile Include="Ranges.cs" />
     <Compile Include="UnitTest.cs" />
     <Compile Include="Vector3.cs" />
+    <Compile Include="Content\XMLSerializer.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,0 +1,8 @@
+Test success!
+There are 0 errors.
+There are 0 warnings.
+
+Begining Test 1: Vector3 addition test
+Test 1 success.
+Begining Test 2: Vector cross product
+Test 2 success.

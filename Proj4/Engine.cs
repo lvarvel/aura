@@ -8,7 +8,7 @@ namespace Aura
     /// <summary>
     /// Class that encapsulates the current program status.
     /// </summary>
-    public class Engine : IDisposable
+    public partial class Engine : IDisposable
     {
         internal int x;
         internal int y;
@@ -23,17 +23,27 @@ namespace Aura
             Instance = this;
             windowName = window_name;
         }
-
+        
+        /// <summary>
+        /// Runs the engine
+        /// </summary>
         public void Run()
         {
             Prime();
             Running = true;
+            Sdl.SDL_Event sdlEvent;
             while (Running)
             {
+                Sdl.SDL_PollEvent(out sdlEvent);
+                this.HandleInput(sdlEvent);
 
+                Gl.glClear(Gl.GL_COLOR_BUFFER_BIT);
             }
         }
 
+        /// <summary>
+        /// Initializes the engine
+        /// </summary>
         internal void Prime()
         {
             if (Sdl.SDL_Init(Sdl.SDL_INIT_VIDEO) != 0) throw new AuraEngineException("SDL failure: " + Sdl.SDL_GetError());
@@ -44,6 +54,7 @@ namespace Aura
             Sdl.SDL_WM_SetCaption(windowName,windowName);
 
             Gl.glViewport(100, 100, x, y);
+            Gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             Gl.glClear(Gl.GL_COLOR_BUFFER_BIT);
         }
 
