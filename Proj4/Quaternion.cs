@@ -36,6 +36,7 @@ namespace Aura
         }
         public Quaternion(float w, Vector3 i)
         {
+            data = new float[4];
             data[0] = w;
             data[1] = i.X;
             data[2] = i.Y;

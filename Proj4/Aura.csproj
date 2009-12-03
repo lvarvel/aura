@@ -112,8 +112,10 @@
     <Compile Include="Engine.Input.cs" />
     <Compile Include="IDrawable.cs" />
     <Compile Include="Image.cs" />
+    <Compile Include="Light.cs" />
     <Compile Include="Material.cs" />
     <Compile Include="Mesh.cs" />
+    <Compile Include="Model.cs" />
     <Compile Include="Object3D.cs" />
     <Compile Include="ParticleAssets.cs" />
     <Compile Include="ParticleSystem.cs">

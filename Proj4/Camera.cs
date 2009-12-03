@@ -20,10 +20,11 @@ namespace Aura
             Gl.glMatrixMode(Gl.GL_PROJECTION);
             Gl.glLoadIdentity();
             Glu.gluPerspective(35.0f, 4 / 3, 1, 10000);
-
+            //Gl.glOrtho(-30, 30, -20, 20, -100, 100);
             Gl.glMatrixMode(Gl.GL_MODELVIEW);
             Gl.glLoadIdentity();
             Glu.gluLookAt(position.X, position.Y, position.Z, chasePoint.X, chasePoint.Y, chasePoint.Z, 0, 1, 0);
+            //Glu.gluLookAt(0,0,5, 0,0,0 , 0, 1, 0);
         }
     }
 
@@ -39,6 +40,7 @@ namespace Aura
         public static void SetCamera(string name, Camera camera)
         {
             cameras.Add(name, camera);
+            current = camera;
         }
     }
 }

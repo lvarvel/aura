@@ -15,6 +15,10 @@ namespace Aura
         private IntPtr screen;
         internal static Engine Instance;
         internal string windowName;
+        public bool Disposed = false;
+
+        //Debug
+        Model m;
 
         public Engine(int screenWidth = 800, int screenHeight = 600, string window_name = "Aura Particle Simulator")
         {
@@ -37,10 +41,40 @@ namespace Aura
                 Sdl.SDL_PollEvent(out sdlEvent);
                 this.HandleInput(sdlEvent);
 
-                Gl.glClear(Gl.GL_COLOR_BUFFER_BIT);
+                Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
+                Update();
+                Draw();
 
-                Sdl.SDL_GL_SwapBuffers();
+                try 
+                { 
+                    if(!Disposed)
+                        Sdl.SDL_GL_SwapBuffers(); 
+                }
+                catch (AccessViolationException e) {  }
             }
+        }
+
+        public void Draw()
+        {
+            
+            CameraManager.Current.ApplyCameraTransforms();
+            Gl.glPushMatrix();
+            Gl.glLoadIdentity();
+            LightManager.ApplyLighting();
+            Gl.glPopMatrix();
+            Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
+            Gl.glPushMatrix();
+            //Debug
+            
+            //Glu.gluSphere(Glu.gluNewQuadric(), 1, 36, 36);
+
+            m.Draw();
+            
+            Gl.glPopMatrix();
+        }
+        public void Update()
+        {
+            m.rotation = m.rotation * new Quaternion(.03f, 0,1,0 );
         }
 
         /// <summary>
@@ -55,9 +89,24 @@ namespace Aura
             if (screen == IntPtr.Zero) throw new AuraEngineException("Unable to set video mode: " + Sdl.SDL_GetError());
             Sdl.SDL_WM_SetCaption(windowName,windowName);
 
-            Gl.glViewport(100, 100, x, y);
-            Gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-            Gl.glClear(Gl.GL_COLOR_BUFFER_BIT);
+            Gl.glViewport(0, 0, x, y);
+            Gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+            Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
+            Sdl.SDL_GL_SetAttribute(Sdl.SDL_GL_DEPTH_SIZE, 16);
+            Gl.glEnableClientState(Gl.GL_VERTEX_ARRAY);
+            Gl.glEnable(Gl.GL_DEPTH_TEST);
+
+            CameraManager.SetCamera("Default", new Camera(new Vector3(0, 5, 10), new Vector3(0, 0, 0)));
+
+            //DEBUG
+            LightManager.LightingEnabled = true;
+            Material lmaterial = new Material(new Color4(.1f, .1f, .1f, .1f), new Color4(1,0,0), new Color4(1,1,1), .1f);
+            Light l = new Light(lmaterial, false);
+            l.position = new Vector3(5,5,5);
+            LightManager.Lights.Add(l);
+            m = new Model(Mesh.Cube);
+
+            
         }
 
         public string WindowName
@@ -76,6 +125,8 @@ namespace Aura
             Sdl.SDL_Quit();
             screen = IntPtr.Zero;
             Instance = null;
+            Disposed = true;
+            Environment.Exit(0);
         }
     }
 

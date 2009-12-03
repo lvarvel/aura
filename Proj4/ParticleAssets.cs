@@ -11,7 +11,7 @@ namespace Aura
         }
         public static Color4 LinearInterpolation(ColorRange range, float p)
         {
-            return range.First + (range.Second * p);
+            return range.First + ((range.Second - range.First)* p);
         }
     }
 }

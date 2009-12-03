@@ -8,36 +8,72 @@ namespace Aura
 {
     public class Mesh : IDrawable, ICloneable
     {
-        public Vector3Array vertexes;
-        public Vector3Array vectorNormals;
+        //public Vector3Array vertexes;
+        //public Vector3Array vectorNormals;
+        public float[] vertexes;
+        public float[] vectorNormals;
+
         public float[] uvCoords;
-        public uint[] indicies;
-        PrimitiveType primitiveType;
+        public int[] indicies;
+        public PrimitiveType PrimitiveType { get; set;}
+        public ShadingType ShadingType { get; set; }
 
         Material material;
 
         public Mesh() { }
 
+        public static Mesh Cube
+        {
+            get
+            {
+                Mesh result = new Mesh();
+
+                float[] verts = { 1,1,1 , 1,1,-1 , 1,-1,-1 , 1,-1,1, 
+                                 -1,1,1 ,-1,1,-1 ,-1,-1,-1 ,-1,-1,1 };
+                float[] normals = { .57735f,.57735f,.57735f , .57735f,.57735f,-.57735f , .57735f,-.57735f,-.57735f , .57735f,-.57735f,.57735f,
+                                 -.57735f,.57735f,.57735f ,-.57735f,.57735f,-.57735f ,-.57735f,-.57735f,-.57735f ,-.57735f,-.57735f,.57735f };
+                //A cube
+                int[] indicies = { 0,1,2,3 , 0,3,7,4 , 5,6,7,4 , 5,1,2,6 , 5,1,0,4 , 6,2,3,7};
+                //int[] indicies = { 0,1,2, 0,2,3, 0,1,5, 0,5,4, 0,3,7, 0,7,4, 1,2,5, 2,6,5, 2,3,7, 2,7,6, 4,5,6, 4,6,7 };
+                
+                //result.vertexes = new Vector3Array(verts);
+                //result.vectorNormals = new Vector3Array(normals);
+                result.vertexes = (verts);
+                result.vectorNormals = (normals);
+
+
+                result.indicies = indicies;
+                result.PrimitiveType = PrimitiveType.Quads;
+                result.material = new Material(new Color4(1,1,1,1.0f), new Color4(.5f,.5f,.5f), new Color4(1,1,1), .01f);
+
+
+                return result;
+            }
+        }
+
         public void Draw()
         {
-            material.ApplyMaterial();
+            if(LightManager.LightingEnabled)
+                material.ApplyMaterial();
+            Gl.glPolygonMode(Gl.GL_FRONT_AND_BACK, Gl.GL_POLYGON);
 
-            Gl.glVertexPointer(3, Gl.GL_FLOAT, 0, (object)(vertexes.GetArray));
+            
             if (vectorNormals != null)
-                Gl.glNormalPointer(Gl.GL_FLOAT, 0, (object)(vectorNormals.GetArray));
+                Gl.glNormalPointer(Gl.GL_FLOAT, 0, (object)(vectorNormals));
             if (uvCoords != null)
                 Gl.glTexCoordPointer(2, Gl.GL_FLOAT, 0, (object)(uvCoords));
-            Gl.glDrawElements((int)primitiveType, indicies.Length, Gl.GL_UNSIGNED_INT, (object)indicies);
+            Gl.glVertexPointer(3, Gl.GL_FLOAT, 0, (object)(vertexes));
+            Gl.glDrawElements((int)PrimitiveType, indicies.Length, Gl.GL_UNSIGNED_INT, (object)indicies);
         }
 
         public object Clone()
         {
             Mesh result = new Mesh();
-            result.vertexes = new Vector3Array(vertexes.GetArray);
-            result.vectorNormals = new Vector3Array(vectorNormals.GetArray);
+            result.vertexes = (vertexes);
+            result.vectorNormals = (vectorNormals);
             result.uvCoords = (float[])uvCoords.Clone();
-            result.indicies = (uint[])indicies.Clone();
-            result.primitiveType = primitiveType;
+            result.indicies = (int[])indicies.Clone();
+            result.PrimitiveType = PrimitiveType;
             result.material = material;
 
             return (object)result;
@@ -50,6 +86,8 @@ namespace Aura
     public enum PrimitiveType { Points = Gl.GL_POINTS, Lines = Gl.GL_LINES, LineStrip = Gl.GL_LINE_STRIP, 
         LineLoop = Gl.GL_LINE_LOOP, Triangles = Gl.GL_TRIANGLES, TriangleStrip = Gl.GL_TRIANGLE_STRIP,
         TriangleFan = Gl.GL_TRIANGLE_FAN, Quads = Gl.GL_QUADS, QuadStrip = Gl.GL_QUAD_STRIP, Polygon = Gl.GL_POLYGON}
+    public enum ShadingType { Flat = 0, Smooth }
+
 
     /// <summary>
     /// Supports reading in obj files

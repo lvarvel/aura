@@ -66,12 +66,20 @@ namespace Aura
         }
         public static Color4 operator +(Color4 lhs, Color4 rhs)
         {
-            Color4 result = new Color4(lhs);
-            //Average the alpha.  
-            result.A = (lhs.A + rhs.A) * 0.5f;
+            Color4 result = new Color4(lhs);  
+            result.A += rhs.A;
             result.R += rhs.R;
             result.G += rhs.G;
             result.B += rhs.B;
+            return result;
+        }
+        public static Color4 operator -(Color4 lhs, Color4 rhs)
+        {
+            Color4 result = new Color4(lhs);
+            result.A -= rhs.A;
+            result.R -= rhs.R;
+            result.G -= rhs.G;
+            result.B -= rhs.B;
             return result;
         }
 

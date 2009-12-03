@@ -22,7 +22,7 @@ namespace Aura
 
         public float Interpolate(float factor)
         {
-            return First + Second * factor;
+            return First + ((Second - First) * factor);
         }
     }
 
