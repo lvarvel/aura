@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Tao.OpenGl;
 using Tao.Sdl;
+using Tao.DevIl;
 
 namespace Aura
 {
@@ -19,6 +20,7 @@ namespace Aura
 
         //Debug
         Model m;
+        Billboard b;
 
         public Engine(int screenWidth = 800, int screenHeight = 600, string window_name = "Aura Particle Simulator")
         {
@@ -59,7 +61,7 @@ namespace Aura
             
             CameraManager.Current.ApplyCameraTransforms();
             Gl.glPushMatrix();
-            Gl.glLoadIdentity();
+           
             LightManager.ApplyLighting();
             Gl.glPopMatrix();
             Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
@@ -67,14 +69,17 @@ namespace Aura
             //Debug
             
             //Glu.gluSphere(Glu.gluNewQuadric(), 1, 36, 36);
-
-            m.Draw();
+            //m.Draw();
+            DrawArgs args = new DrawArgs(new Vector3(0, 0, 0), new Color4(1, 1, 1, 1));
             
+            b.Draw(args);
+
+
             Gl.glPopMatrix();
         }
         public void Update()
         {
-            m.rotation = m.rotation * new Quaternion(.03f, 0,1,0 );
+            //m.rotation = m.rotation * new Quaternion(.03f, 0,1,0 );
         }
 
         /// <summary>
@@ -95,16 +100,28 @@ namespace Aura
             Sdl.SDL_GL_SetAttribute(Sdl.SDL_GL_DEPTH_SIZE, 16);
             Gl.glEnableClientState(Gl.GL_VERTEX_ARRAY);
             Gl.glEnable(Gl.GL_DEPTH_TEST);
+            Gl.glShadeModel(Gl.GL_SMOOTH);
+            Gl.glEnable(Gl.GL_TEXTURE_2D);
+            Il.ilInit();
+            Ilu.iluInit();
+            Ilut.ilutInit();
+            Ilu.iluImageParameter(Ilu.ILU_PLACEMENT, Ilu.ILU_UPPER_LEFT);
+            Ilut.ilutRenderer(Ilut.ILUT_OPENGL);
+            
 
-            CameraManager.SetCamera("Default", new Camera(new Vector3(0, 5, 10), new Vector3(0, 0, 0)));
+            CameraManager.SetCamera("Default", new Camera(new Vector3(10, 0, 10), new Vector3(0, 0, 0)));
 
             //DEBUG
-            LightManager.LightingEnabled = true;
+            LightManager.LightingEnabled = false;
             Material lmaterial = new Material(new Color4(.1f, .1f, .1f, .1f), new Color4(1,0,0), new Color4(1,1,1), .1f);
             Light l = new Light(lmaterial, false);
             l.position = new Vector3(5,5,5);
             LightManager.Lights.Add(l);
             m = new Model(Mesh.Cube);
+
+            //DEBUG: Billboards
+            Texture t = ImageImporter.Instance.ImportContent("Data/jet.jpg");
+            b = new Billboard(t);
 
             
         }

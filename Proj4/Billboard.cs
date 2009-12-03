@@ -20,7 +20,7 @@ namespace Aura
         {
             Image = image;
             Color = null;
-            Dimention = new Vector2(0,0);
+            Dimention = new Vector2(1,1);
             LockType = lockType;
         }
         public Billboard(Texture image, Material color, Vector2 dimention, BillboardLockType lockType = BillboardLockType.Spherical)
@@ -38,7 +38,8 @@ namespace Aura
             //Draw the billboard with texture coordinates
             Gl.glBindTexture(Gl.GL_TEXTURE_2D, (int)Image);
 
-            if (args.LightingEnabled)
+            /*
+            if (LightManager.LightingEnabled)
             {
                 Gl.glEnable(Gl.GL_LIGHTING);
                 if (args._Material == null) throw new ArgumentNullException();
@@ -48,7 +49,7 @@ namespace Aura
             {
                 if (args.Color == null) throw new ArgumentNullException();
                 Gl.glColor4fv((float[])args.Color);
-            }
+            }*/
 
             Gl.glBegin(Gl.GL_POLYGON);
             Gl.glTexCoord2f(1, 1); Gl.glVertex3d(args.Scale.X, args.Scale.Y, 0);
@@ -85,21 +86,21 @@ namespace Aura
         private void configBillboard(Vector3 position)
         {
             //Shamelessly stolen from http://www.lighthouse3d.com/opengl/billboarding/index.php?billSphe
-            if (LockType == BillboardLockType.Cylindrical)
+            if (LockType == BillboardLockType.Cylindrical || LockType == BillboardLockType.Spherical)
             {
                 float[] modelView = new float[16];
                 Gl.glMatrixMode(Gl.GL_MODELVIEW);
                 Gl.glPushMatrix();
-                Gl.glLoadIdentity();
+                //Gl.glLoadIdentity();
                 Vector3 camera = CameraManager.Current.position;
 
                 Vector3 difference = new Vector3(camera.X - position.X, 0, camera.Z - position.Z);
-                Vector3 lookAt = new Vector3(0, 0, 1);
+                Vector3 lookAt = new Vector3(0,0,1);
                 difference.normalize();
                 Vector3 up = lookAt.cross(difference);
                 float angleCosine = lookAt.dot(difference);
                 if ((angleCosine < 0.99990) && (angleCosine > -0.9999))
-                    Gl.glRotatef((float)Math.Acos(angleCosine), up.X, up.Y, up.Z);
+                    Gl.glRotatef((float)(Math.Acos(angleCosine) * 180/Math.PI), up.X, up.Y, up.Z);
 
                 if (LockType == BillboardLockType.Spherical)
                 {
@@ -109,9 +110,9 @@ namespace Aura
                     if ((angleCosine < 0.99990) && (angleCosine > -0.9999))
                     {
                         if (difference3d.Y < 0)
-                            Gl.glRotatef((float)Math.Acos(angleCosine), 1, 0, 0);
+                            Gl.glRotatef((float)(Math.Acos(angleCosine) * 180 / Math.PI), 1, 0, 0);
                         else
-                            Gl.glRotatef((float)Math.Acos(angleCosine), -1, 0, 0);
+                            Gl.glRotatef((float)(Math.Acos(angleCosine) * 180 / Math.PI), -1, 0, 0);
                     }
                 }
             }

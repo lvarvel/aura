@@ -6,7 +6,7 @@ namespace Aura
 {
     public class Camera : Object3D
     {
-        Vector3 chasePoint;
+        public Vector3 chasePoint;
 
         public Camera() : base() { }
         public Camera(Vector3 Position, Vector3 LookAt)

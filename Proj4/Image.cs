@@ -46,6 +46,7 @@ namespace Aura
         {
             Texture result = new Texture();
             //Suddenly, DevIl makes importing images directly into openGL so easy its silly
+            
             result.glHandle = Ilut.ilutGLLoadImage(path);
             if(!buffer.ContainsKey(path))
                 buffer.Add(path, result);
