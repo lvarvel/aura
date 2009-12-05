@@ -1,5 +1,5 @@
 ﻿using System;
-using Aura.Content;
+using Aura.Core;
 
 namespace Aura
 {

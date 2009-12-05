@@ -25,7 +25,7 @@ namespace Aura.Graphics
         {
             Gl.glMaterialfv(Gl.GL_FRONT_AND_BACK, Gl.GL_AMBIENT, ((float[])Ambient));
             Gl.glMaterialfv(Gl.GL_FRONT_AND_BACK, Gl.GL_DIFFUSE, ((float[])Diffuse));
-            //Gl.glMaterialfv(Gl.GL_FRONT_AND_BACK, Gl.GL_SPECULAR, ((float[])Specular));
+            Gl.glMaterialfv(Gl.GL_FRONT_AND_BACK, Gl.GL_SPECULAR, ((float[])Specular));
             Gl.glMaterialf(Gl.GL_FRONT_AND_BACK, Gl.GL_SHININESS, SpecularExponent);
         }
     }

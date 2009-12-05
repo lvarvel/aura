@@ -60,9 +60,19 @@ namespace Aura.Graphics
 
             
             if (vectorNormals != null)
+            {
+                Gl.glEnableClientState(Gl.GL_NORMAL_ARRAY);
                 Gl.glNormalPointer(Gl.GL_FLOAT, 0, (object)(vectorNormals));
+            }
             if (uvCoords != null)
+            {
+                Gl.glEnableClientState(Gl.GL_TEXTURE_COORD_ARRAY);
                 Gl.glTexCoordPointer(2, Gl.GL_FLOAT, 0, (object)(uvCoords));
+            }
+            else
+            {
+                Gl.glDisableClientState(Gl.GL_TEXTURE_COORD_ARRAY);
+            }
             Gl.glVertexPointer(3, Gl.GL_FLOAT, 0, (object)(vertexes));
             Gl.glDrawElements((int)PrimitiveType, indicies.Length, Gl.GL_UNSIGNED_INT, (object)indicies);
         }

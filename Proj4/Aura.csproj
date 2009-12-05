@@ -112,7 +112,7 @@
     <Compile Include="Core\Engine.cs" />
     <Compile Include="Core\Engine.Input.cs" />
     <Compile Include="Core\IHasID.cs" />
-    <Compile Include="Core\IDrawable.cs" />
+    <Compile Include="Graphics\IDrawable.cs" />
     <Compile Include="Graphics\Image.cs" />
     <Compile Include="Graphics\Light.cs" />
     <Compile Include="Graphics\Material.cs" />

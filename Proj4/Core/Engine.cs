@@ -73,16 +73,16 @@ namespace Aura.Core
             //Debug
             
             //Glu.gluSphere(Glu.gluNewQuadric(), 1, 36, 36);
-            //m.Draw();
+            m.Draw();
 
-            ps.Draw();
+            //ps.Draw();
 
             Gl.glPopMatrix();
         }
         public void Update()
         {
             //Debug Lighting
-            //m.rotation = m.rotation * new Quaternion(.03f, 0,1,0 );
+            m.rotation = m.rotation * new Quaternion(.03f, 0,1,0 );
 
             //Debug particles
             ps.Update();
@@ -108,6 +108,8 @@ namespace Aura.Core
             Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
             Sdl.SDL_GL_SetAttribute(Sdl.SDL_GL_DEPTH_SIZE, 16);
             Gl.glEnableClientState(Gl.GL_VERTEX_ARRAY);
+            Gl.glEnableClientState(Gl.GL_NORMAL_ARRAY);
+            //Gl.glEnableClientState(Gl.GL_TEXTURE_COORD_ARRAY);
             Gl.glEnable(Gl.GL_DEPTH_TEST);
             Gl.glShadeModel(Gl.GL_SMOOTH);
             Gl.glEnable(Gl.GL_TEXTURE_2D);
@@ -121,11 +123,11 @@ namespace Aura.Core
             Ilut.ilutRenderer(Ilut.ILUT_OPENGL);
             #endregion
 
-            CameraManager.SetCamera("Default", new Camera(new Vector3(10, 0, 10), new Vector3(0, 0, 0)));
+            CameraManager.SetCamera("Default", new Camera(new Vector3(0, 10, 10), new Vector3(0, 0, 0)));
 
             #region DEBUG
             //DEBUG: LIGHTING (BROKEN)
-            LightManager.LightingEnabled = false;
+            LightManager.LightingEnabled = true;
             Material lmaterial = new Material(new Color4(.1f, .1f, .1f, .1f), new Color4(1,0,0), new Color4(1,1,1), .1f);
             Light l = new Light(lmaterial, false);
             l.position = new Vector3(5,5,5);
