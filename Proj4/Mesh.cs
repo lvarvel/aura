@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Tao.OpenGl;
+using Aura.Content;
 
 namespace Aura
 {

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Aura.Images;
 using Tao.OpenGl;
 
 namespace Aura
