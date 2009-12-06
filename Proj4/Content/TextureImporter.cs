@@ -1,40 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using Aura.Content;
+using Aura.Graphics;
 using Tao.DevIl;
-using Tao.OpenGl;
 
-namespace Aura.Graphics
+namespace Aura.Content
 {
-    public class Texture : IDisposable
-    {
-        internal int glHandle;
-
-        /// <summary>
-        /// Creates an empty image
-        /// </summary>
-        internal Texture() { }
-
-        public static explicit operator int (Texture rhs)
-        {
-            return rhs.glHandle;
-        }
-
-        /// <summary>
-        /// Release graphics card memory
-        /// </summary>
-        public void Dispose()
-        {
-            //Note: Double check with someone on this one
-            Gl.glDeleteTextures(1, ref glHandle);
-        }
-    }
-
-    public class ImageImporter : IContentImporter<Texture>
+    public class TextureImporter : IContentImporter<Texture>
     {
         private Dictionary<string, Texture> buffer = new Dictionary<string, Texture>();
 
-        private ImageImporter() { }
+        private TextureImporter() { }
 
         /// <summary>
         /// Processes an image at specified path directly into openGL
@@ -46,9 +21,9 @@ namespace Aura.Graphics
         {
             Texture result = new Texture();
             //Suddenly, DevIl makes importing images directly into openGL so easy its silly
-            
+
             result.glHandle = Ilut.ilutGLLoadImage(path);
-            if(!buffer.ContainsKey(path))
+            if (!buffer.ContainsKey(path))
                 buffer.Add(path, result);
 
             return result;
@@ -64,6 +39,6 @@ namespace Aura.Graphics
             return buffer[name];
         }
 
-        public static readonly ImageImporter Instance = new ImageImporter();
+        public static readonly TextureImporter Instance = new TextureImporter();
     }
 }

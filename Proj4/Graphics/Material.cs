@@ -12,7 +12,13 @@ namespace Aura.Graphics
         public Color4 Specular;
         public float SpecularExponent;
 
-        public Material() { }
+        public Material() 
+        {
+            Ambient = new Color4(1, 1, 1);
+            Diffuse = new Color4(1, 1, 1);
+            Specular = new Color4(1, 1, 1);
+            SpecularExponent = 0.1f;
+        }
         public Material(Color4 ambient, Color4 diffuse, Color4 specular, float specularExponent)
         {
             Ambient = ambient;

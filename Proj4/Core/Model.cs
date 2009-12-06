@@ -22,6 +22,8 @@ namespace Aura.Core
             Vector3 axis;
             float angle;
             rotation.getAxisAngle(out axis, out angle);
+            if (angle == float.NaN)
+                throw new Exception();
 
             Gl.glTranslatef(position.X, position.Y, position.Z);
             Gl.glRotatef(angle * (float)(180/Math.PI), axis.X, axis.Y, axis.Z);

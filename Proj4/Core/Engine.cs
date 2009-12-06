@@ -4,6 +4,7 @@ using Tao.OpenGl;
 using Tao.Sdl;
 using Tao.DevIl;
 using Aura.Graphics;
+using Aura.Content;
 
 namespace Aura.Core
 {
@@ -73,16 +74,16 @@ namespace Aura.Core
             //Debug
             
             //Glu.gluSphere(Glu.gluNewQuadric(), 1, 36, 36);
-            m.Draw();
+            //m.Draw();
 
-            //ps.Draw();
+            ps.Draw();
 
             Gl.glPopMatrix();
         }
         public void Update()
         {
             //Debug Lighting
-            m.rotation = m.rotation * new Quaternion(.03f, 0,1,0 );
+            m.rotation = m.rotation * new Quaternion((float)(Math.PI / 100), 0,1,0 );
 
             //Debug particles
             ps.Update();
@@ -123,22 +124,27 @@ namespace Aura.Core
             Ilut.ilutRenderer(Ilut.ILUT_OPENGL);
             #endregion
 
-            CameraManager.SetCamera("Default", new Camera(new Vector3(0, 10, 10), new Vector3(0, 0, 0)));
+            CameraManager.SetCamera("Default", new Camera(new Vector3(100, 0, 100), new Vector3(0, 0, 0)));
 
             #region DEBUG
             //DEBUG: LIGHTING (BROKEN)
-            LightManager.LightingEnabled = true;
-            Material lmaterial = new Material(new Color4(.1f, .1f, .1f, .1f), new Color4(1,0,0), new Color4(1,1,1), .1f);
+            LightManager.LightingEnabled = false;
+            Material lmaterial = new Material(new Color4(.1f, .1f, .1f, .1f), new Color4(.1f,0,0), new Color4(.1f,.1f,.1f), .1f);
             Light l = new Light(lmaterial, false);
-            l.position = new Vector3(5,5,5);
+            l.position = new Vector3(0,15,5);
             LightManager.Lights.Add(l);
-            m = new Model(Mesh.Cube);
+            m = new Model(ObjImporter.Instance.ImportContent("Data/space.obj"));
+            m.scale = .25f;
 
             //Debug: Particles
-            Texture t = ImageImporter.Instance.ImportContent("Data/jet.jpg");
+            Texture t = TextureImporter.Instance.ImportContent("Data/jet.jpg");
             b = new Billboard(t, BillboardLockType.Spherical);
+            PointVisualization v = new PointVisualization();
+
             ps = new ParticleSystem(300, b, FunctionAssets.LinearInterpolation, new ColorRange(new Color4(1, 1, 1)), FunctionAssets.LinearInterpolation, new Range(.1f));
             ps.Count = 5;
+            
+            
             ParticleSystem[] tps = { ps };
             e = new EmitterBase(1, tps, DirectionalClamp.ZeroClamp, null, true);
             #endregion

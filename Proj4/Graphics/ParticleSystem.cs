@@ -132,12 +132,22 @@ namespace Aura.Graphics
         #region Methods
         public virtual void Update()
         {
+            List<Particle> toRemove = new List<Particle>();
+
             foreach (Particle p in particles)
             {
+                p.life += 1;
+                if (p.life > maxLife)
+                    toRemove.Add(p);
                 float f = p.life / maxLife;
                 float v = speedHandler(speedRange, f);
                 p.position += p.velocity * v;
             }
+            foreach (Particle p in toRemove)
+            {
+                particles.Remove(p);
+            }
+            toRemove.Clear();
         }
 
         public virtual void Draw()

@@ -16,8 +16,8 @@ namespace Aura.Content
     /// <summary>
     /// Standard interface for a class that can be loaded
     /// </summary>
-    public interface IImportable
+    public interface IImportable<T>
     {
-        void ReadValues(ref StreamReader reader);
+        IContentImporter<T> Importer { get; }
     }
 }

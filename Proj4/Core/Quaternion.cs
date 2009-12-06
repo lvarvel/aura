@@ -76,10 +76,15 @@ namespace Aura.Core
         public void getAxisAngle(out Vector3 axis, out float angle)
         {
             float scale = (float)Math.Sqrt(X * X + Y * Y + Z * Z);
-            axis = new Vector3();
-            axis.X = X / scale;
-            axis.Y = Y / scale;
-            axis.Z = Z / scale;
+            if (scale == 0) 
+                axis = new Vector3(0, 0, 0);
+            else
+            {
+                axis = new Vector3();
+                axis.X = X / scale;
+                axis.Y = Y / scale;
+                axis.Z = Z / scale;
+            }
             angle = (float)Math.Acos(W) * 2.0f;
         }
         Quaternion conjugate()

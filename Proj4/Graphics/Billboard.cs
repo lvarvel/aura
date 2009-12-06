@@ -34,7 +34,10 @@ namespace Aura.Graphics
 
         public void Draw(DrawArgs args)
         {
+            Gl.glPushMatrix();
+            Gl.glTranslatef(args.Position.X, args.Position.Y, args.Position.Z);
             configBillboard(args.Position);
+            
 
             //Draw the billboard with texture coordinates
             Gl.glBindTexture(Gl.GL_TEXTURE_2D, (int)Image);
@@ -63,6 +66,7 @@ namespace Aura.Graphics
             {
                 Gl.glPopMatrix();
             }
+            Gl.glPopMatrix();
         }
         public void Draw(Vector3 position)
         {

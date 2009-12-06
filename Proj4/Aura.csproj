@@ -99,6 +99,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Content\ObjImporter.cs" />
+    <Compile Include="Content\TextureImporter.cs" />
     <Compile Include="Core\Arrays.cs" />
     <Compile Include="Graphics\Billboard.cs" />
     <Compile Include="Core\Camera.cs" />
@@ -113,7 +115,8 @@
     <Compile Include="Core\Engine.Input.cs" />
     <Compile Include="Core\IHasID.cs" />
     <Compile Include="Graphics\IDrawable.cs" />
-    <Compile Include="Graphics\Image.cs" />
+    <Compile Include="Graphics\RawMesh.cs" />
+    <Compile Include="Graphics\Texture.cs" />
     <Compile Include="Graphics\Light.cs" />
     <Compile Include="Graphics\Material.cs" />
     <Compile Include="Graphics\Mesh.cs" />
@@ -130,11 +133,12 @@
     <Compile Include="Core\Quaternion.cs" />
     <Compile Include="Core\Ranges.cs" />
     <Compile Include="Core\Timer.cs" />
-    <Compile Include="Core\TimerManager.cs" />
+    <Compile Include="Graphics\TimerManager.cs" />
     <Compile Include="Core\UnitTest.cs" />
     <Compile Include="Core\Util.cs" />
     <Compile Include="Core\Vector3.cs" />
     <Compile Include="Content\XMLContentImporter.cs" />
+    <Compile Include="Scene\Scene.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
