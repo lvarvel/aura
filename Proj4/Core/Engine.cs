@@ -5,6 +5,7 @@ using Tao.Sdl;
 using Tao.DevIl;
 using Aura.Graphics;
 using Aura.Content;
+using Aura.Graphics.Foliage;
 
 namespace Aura.Core
 {
@@ -27,6 +28,7 @@ namespace Aura.Core
         Billboard b;
         Emitter e;
         ParticleSystem ps;
+        Tree tree;
 
         public Engine(int screenWidth = 800, int screenHeight = 600, string window_name = "Aura Particle Simulator")
         {
@@ -74,19 +76,20 @@ namespace Aura.Core
             //Debug
             
             //Glu.gluSphere(Glu.gluNewQuadric(), 1, 36, 36);
-            //m.Draw();
+            m.Draw();
+            tree.Draw();
 
-            ps.Draw();
+            //ps.Draw();
 
             Gl.glPopMatrix();
         }
         public void Update()
         {
             //Debug Lighting
-            m.rotation = m.rotation * new Quaternion((float)(Math.PI / 100), 0,1,0 );
+            //m.rotation = m.rotation * new Quaternion((float)(Math.PI / 100), 0,1,0 );
 
             //Debug particles
-            ps.Update();
+            //ps.Update();
         }
 
         /// <summary>
@@ -114,6 +117,8 @@ namespace Aura.Core
             Gl.glEnable(Gl.GL_DEPTH_TEST);
             Gl.glShadeModel(Gl.GL_SMOOTH);
             Gl.glEnable(Gl.GL_TEXTURE_2D);
+            Gl.glEnable(Gl.GL_BLEND);
+            Gl.glBlendFunc(Gl.GL_SRC_ALPHA, Gl.GL_ONE_MINUS_SRC_ALPHA);
             #endregion
 
             #region Initialize ilut
@@ -124,29 +129,31 @@ namespace Aura.Core
             Ilut.ilutRenderer(Ilut.ILUT_OPENGL);
             #endregion
 
-            CameraManager.SetCamera("Default", new Camera(new Vector3(100, 0, 100), new Vector3(0, 0, 0)));
+            CameraManager.SetCamera("Default", new Camera(new Vector3(10, 10, 10), new Vector3(0, 0, 0)));
 
             #region DEBUG
             //DEBUG: LIGHTING (BROKEN)
-            LightManager.LightingEnabled = false;
+            LightManager.LightingEnabled = true;
+            Texture t = TextureImporter.Instance.ImportContent("Data/grass.jpg");
+            Texture leaf = TextureImporter.Instance.ImportContent("Data/particle.png");
             Material lmaterial = new Material(new Color4(.1f, .1f, .1f, .1f), new Color4(.1f,0,0), new Color4(.1f,.1f,.1f), .1f);
             Light l = new Light(lmaterial, false);
             l.position = new Vector3(0,15,5);
             LightManager.Lights.Add(l);
-            m = new Model(ObjImporter.Instance.ImportContent("Data/space.obj"));
-            m.scale = .25f;
+            m = new Model(ObjImporter.Instance.ImportContent("Data/plane.obj"), t);
+            m.scale = 1f;
 
             //Debug: Particles
-            Texture t = TextureImporter.Instance.ImportContent("Data/jet.jpg");
-            b = new Billboard(t, BillboardLockType.Spherical);
+            
+            b = new Billboard(leaf, BillboardLockType.Spherical);
             PointVisualization v = new PointVisualization();
 
             ps = new ParticleSystem(300, b, FunctionAssets.LinearInterpolation, new ColorRange(new Color4(1, 1, 1)), FunctionAssets.LinearInterpolation, new Range(.1f));
             ps.Count = 5;
-            
+            tree = new Tree(new Vector3(0,0,0), 3.0f, 1.5f, .3f, 3, 3, b);
             
             ParticleSystem[] tps = { ps };
-            e = new EmitterBase(1, tps, DirectionalClamp.ZeroClamp, null, true);
+            //e = new EmitterBase(1, tps, DirectionalClamp.ZeroClamp, null, true);
             #endregion
         }
 

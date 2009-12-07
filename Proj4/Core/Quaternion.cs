@@ -87,12 +87,12 @@ namespace Aura.Core
             }
             angle = (float)Math.Acos(W) * 2.0f;
         }
-        Quaternion conjugate()
+        public Quaternion conjugate()
         {
             return new Quaternion(W, new Vector3(-X, -Y, -Z));
         }
 	    
-	    Vector3 transformVector(Vector3 vec)
+	    public Vector3 transformVector(Vector3 vec)
 	    {
 		    Vector3 vn = new Vector3(ref vec);
 		    vn.normalize();

@@ -20,6 +20,11 @@ namespace Aura.Graphics
             return rhs.glHandle;
         }
 
+        public void ApplyTexture()
+        {
+            Gl.glBindTexture(Gl.GL_TEXTURE_2D, glHandle);
+        }
+
         /// <summary>
         /// Release graphics card memory
         /// </summary>

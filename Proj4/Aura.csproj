@@ -116,6 +116,7 @@
     <Compile Include="Core\Engine.cs" />
     <Compile Include="Core\Engine.Input.cs" />
     <Compile Include="Core\IHasID.cs" />
+    <Compile Include="Graphics\Foliage\Tree.cs" />
     <Compile Include="Graphics\IDrawable.cs" />
     <Compile Include="Graphics\RawMesh.cs" />
     <Compile Include="Graphics\Shader.cs" />
@@ -147,7 +148,15 @@
     <Compile Include="Scene\SceneNode.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Data\bomb.obj" />
     <None Include="Data\jet.jpg" />
+    <None Include="Data\plane.obj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Data\particle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Data\grass.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

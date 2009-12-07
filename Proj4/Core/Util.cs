@@ -14,7 +14,9 @@ namespace Aura.Core
         {
             return (r.NextDouble() > .49) ? 1 : -1;
         }
-        private static Random r = new Random();
+        public static Random r = new Random();
+
+
 
         /// <summary>
         /// Returns a random, normalized vector3

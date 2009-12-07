@@ -42,8 +42,8 @@ namespace Aura.Graphics
             //Draw the billboard with texture coordinates
             Gl.glBindTexture(Gl.GL_TEXTURE_2D, (int)Image);
 
-            /*
-            if (LightManager.LightingEnabled)
+            
+            if (args.LightingEnabled)
             {
                 Gl.glEnable(Gl.GL_LIGHTING);
                 if (args._Material == null) throw new ArgumentNullException();
@@ -53,7 +53,7 @@ namespace Aura.Graphics
             {
                 if (args.Color == null) throw new ArgumentNullException();
                 Gl.glColor4fv((float[])args.Color);
-            }*/
+            }
 
             Gl.glBegin(Gl.GL_POLYGON);
             Gl.glTexCoord2f(1, 1); Gl.glVertex3d(args.Scale.X, args.Scale.Y, 0);

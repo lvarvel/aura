@@ -9,7 +9,7 @@ namespace Aura.Scene
     [UnitTest(3)]
     public class SceneGraph : IEnumerable<SceneNode>
     {
-        SceneNode Root { get; protected set; }
+        public SceneNode Root { get; protected set; }
 
         public SceneGraph()
         {
