@@ -4,7 +4,7 @@ namespace Aura.Core
 {
     interface IHasID
     {
-        int GetID { get; }
+        int ID { get; }
     }
     public static class IDManager
     {

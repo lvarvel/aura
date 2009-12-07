@@ -12,7 +12,7 @@ namespace Aura.Core
         #region Fields
         protected Stopwatch stopWatch;
         protected bool hasActivated;
-        protected int ID;
+        protected int _id;
 
         /// <summary>
         /// Period, in seconds
@@ -27,7 +27,7 @@ namespace Aura.Core
         {
             Period = float.NaN;
             stopWatch = new Stopwatch();
-            ID = IDManager.NewID;
+            _id = IDManager.NewID;
             TimerManager.Instance.RegisterTimer(this);
         }
 
@@ -36,7 +36,7 @@ namespace Aura.Core
             Period = period;
             Repeat = repeat;
             stopWatch = new Stopwatch();
-            ID = IDManager.NewID;
+            _id = IDManager.NewID;
             TimerManager.Instance.RegisterTimer(this);
         }
 
@@ -81,9 +81,9 @@ namespace Aura.Core
             get { return stopWatch.IsRunning; }
         }
 
-        public int GetID
+        public int ID
         {
-            get { return ID; }
+            get { return _id; }
         }
 
         public override bool Equals(object obj)

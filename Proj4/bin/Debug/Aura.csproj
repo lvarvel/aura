@@ -103,7 +103,6 @@
     <Compile Include="Content\ShaderImporter.cs" />
     <Compile Include="Content\TextureImporter.cs" />
     <Compile Include="Core\Arrays.cs" />
-    <Compile Include="Core\Matrix.cs" />
     <Compile Include="Graphics\Billboard.cs" />
     <Compile Include="Core\Camera.cs" />
     <Compile Include="Core\Color.cs" />
@@ -143,15 +142,11 @@
     <Compile Include="Content\XMLContentImporter.cs" />
     <Compile Include="Scene\QuadTree.cs" />
     <Compile Include="Scene\Scene.cs" />
-    <Compile Include="Scene\SceneGraph.cs" />
-    <Compile Include="Scene\SceneNode.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Data\jet.jpg" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy $(ProjectDir)Data\*.* $(TargetDir)Data</PostBuildEvent>
+    <PostBuildEvent>copy $(ProjectDir)/Data $(TargetDir)/Data</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

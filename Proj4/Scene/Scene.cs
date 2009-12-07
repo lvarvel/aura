@@ -3,7 +3,8 @@ using System.Collections.Generic;
 
 namespace Aura.Scene
 {
-    class Scene
+    public class Scene
     {
+
     }
 }
