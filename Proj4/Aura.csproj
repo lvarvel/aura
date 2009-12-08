@@ -104,6 +104,8 @@
     <Compile Include="Content\TextureImporter.cs" />
     <Compile Include="Core\Arrays.cs" />
     <Compile Include="Core\Matrix.cs" />
+    <Compile Include="Graphics\Assets\Explosion.cs" />
+    <Compile Include="Graphics\BatchManager.cs" />
     <Compile Include="Graphics\Billboard.cs" />
     <Compile Include="Core\Camera.cs" />
     <Compile Include="Core\Color.cs" />
@@ -112,11 +114,12 @@
     <Compile Include="Content\Descriptor.cs" />
     <Compile Include="Content\ParticleImporter.cs" />
     <Compile Include="Content\XMLImporterBase.cs" />
+    <Compile Include="Graphics\BillboardRay.cs" />
     <Compile Include="Graphics\Emitter.cs" />
     <Compile Include="Core\Engine.cs" />
     <Compile Include="Core\Engine.Input.cs" />
     <Compile Include="Core\IHasID.cs" />
-    <Compile Include="Graphics\Foliage\Tree.cs" />
+    <Compile Include="Graphics\Assets\Tree.cs" />
     <Compile Include="Graphics\IDrawable.cs" />
     <Compile Include="Graphics\RawMesh.cs" />
     <Compile Include="Graphics\Shader.cs" />
@@ -156,7 +159,11 @@
     <None Include="Data\particle.png" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Data\dust_billboard.png" />
+    <Content Include="Data\dust_billboard2.png" />
     <Content Include="Data\grass.jpg" />
+    <Content Include="Data\leaf.png" />
+    <Content Include="Data\ray_billboard.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

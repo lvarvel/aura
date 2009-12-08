@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Aura.Core;
 using Tao.OpenGl;
 
-namespace Aura.Graphics.Foliage
+namespace Aura.Graphics.Assets
 {
     public class Tree : IDrawable
     {
@@ -15,7 +15,7 @@ namespace Aura.Graphics.Foliage
         public Tree(Vector3 position, float treeHeight, float angleClamp, float dropOff, int number, 
             int depth, Billboard b)
         {
-            args = new DrawArgs(null, new Color4(0, 1, 0));
+            args = new DrawArgs(null, new Color4(0, .5f, 0, 1f));
             Root = new TreeBranch();
             Root.Position = position;
             var subr = new TreeBranch(treeHeight * dropOff, angleClamp, dropOff, number, new Vector3(0,1,0),
@@ -35,6 +35,9 @@ namespace Aura.Graphics.Foliage
             Gl.glScalef(1, 1, 1);
             Gl.glDisable(Gl.GL_LIGHTING);
             Root.Draw();
+
+            BatchManager.Current.Draw();
+            BatchManager.Current.Clear();
 
             if(LightManager.LightingEnabled)
                 Gl.glEnable(Gl.GL_LIGHTING);
@@ -71,7 +74,6 @@ namespace Aura.Graphics.Foliage
             */
             Quaternion rot = new Quaternion(angleClamp, rand.X, rand.Y, rand.Z);
             Vector3 result = rot.transformVector(normal);
-            result = result;
             return result;
         }
     }
@@ -90,7 +92,10 @@ namespace Aura.Graphics.Foliage
             Root = root;
             for (int i = 0; i < number; ++i)
             {
-                points.Add(getNext(c_length, angleClamp, normal) + position);
+                if (depthCounter > 0)
+                    points.Add(getNext(c_length, angleClamp, normal) + position);
+                else
+                    points.Add(getNext(c_length, angleClamp, normal) * 0.5f + position);
             }
 
             if (depthCounter > 0)
@@ -115,8 +120,7 @@ namespace Aura.Graphics.Foliage
             if (Parent != null)
             {
                 Gl.glLineWidth(3);
-                //Gl.glColor3f(.522f, .152f, 0.0f); //brown
-                Gl.glColor3f(1,0,0);
+                Gl.glColor3f(.464f, .134f, 0.0f); //brown
                 Gl.glBegin(Gl.GL_LINES);
                 Gl.glVertex3fv((float[])Position);
                 Gl.glVertex3fv((float[])Parent.Position);
@@ -144,7 +148,7 @@ namespace Aura.Graphics.Foliage
         public override void Draw()
         {
             Root.args.Position = Position;
-            //leaf.Draw(Root.args);
+            leaf.Draw(Root.args);
         }
     }
 }

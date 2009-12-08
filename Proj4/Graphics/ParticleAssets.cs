@@ -14,5 +14,9 @@ namespace Aura.Graphics
         {
             return range.First + ((range.Second - range.First)* p);
         }
+        public static Color4 AlphaSpike(ColorRange range, float p)
+        {
+
+        }
     }
 }

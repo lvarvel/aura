@@ -17,7 +17,7 @@ namespace Aura.Graphics
     /// <summary>
     /// Contains data about drawing a visualization
     /// </summary>
-    public class DrawArgs : IDisposable
+    public class DrawArgs : IDisposable, ICloneable
     {
         public Vector3 Position;
         public Vector3 Vector;
@@ -67,6 +67,14 @@ namespace Aura.Graphics
             Color = null;
             Vector = null;
             _Material = null;
+        }
+
+        public object Clone()
+        {
+            DrawArgs result = new DrawArgs(Vector3Pool.Instance.New<float>(Position.X, Position.Y, Position.Z), Vector, _Material, Scale, Rotation);
+            result.LightingEnabled = LightingEnabled;
+            result.Color = (Color4)Color.Clone();
+            return (object)result;
         }
     }
 }

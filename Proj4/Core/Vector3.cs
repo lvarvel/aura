@@ -7,7 +7,7 @@ namespace Aura.Core
     /// Represents a 3 dimentional vector
     /// </summary>
     [UnitTest(1)]
-    public class Vector3 : IPoolable<float>
+    public class Vector3 : IPoolable<float>, ICloneable
     {
         private float[] data;
 
@@ -180,6 +180,15 @@ namespace Aura.Core
             data[2] = (float)parameters[2];
         }
         #endregion
+
+        public object Clone()
+        {
+            Vector3 result = new Vector3();
+            result.X = X;
+            result.Y = Y;
+            result.Z = Z;
+            return (object)result;
+        }
     }
 
     /// <summary>

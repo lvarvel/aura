@@ -5,7 +5,7 @@ using Tao.Sdl;
 using Tao.DevIl;
 using Aura.Graphics;
 using Aura.Content;
-using Aura.Graphics.Foliage;
+using Aura.Graphics.Assets;
 
 namespace Aura.Core
 {
@@ -117,8 +117,8 @@ namespace Aura.Core
             Gl.glEnable(Gl.GL_DEPTH_TEST);
             Gl.glShadeModel(Gl.GL_SMOOTH);
             Gl.glEnable(Gl.GL_TEXTURE_2D);
-            Gl.glEnable(Gl.GL_BLEND);
-            Gl.glBlendFunc(Gl.GL_SRC_ALPHA, Gl.GL_ONE_MINUS_SRC_ALPHA);
+            Gl.glAlphaFunc(Gl.GL_GREATER, .016f);
+            Gl.glEnable(Gl.GL_ALPHA_TEST);
             #endregion
 
             #region Initialize ilut
@@ -135,7 +135,7 @@ namespace Aura.Core
             //DEBUG: LIGHTING (BROKEN)
             LightManager.LightingEnabled = true;
             Texture t = TextureImporter.Instance.ImportContent("Data/grass.jpg");
-            Texture leaf = TextureImporter.Instance.ImportContent("Data/particle.png");
+            Texture leaf = TextureImporter.Instance.ImportContent("Data/leaf.png");
             Material lmaterial = new Material(new Color4(.1f, .1f, .1f, .1f), new Color4(.1f,0,0), new Color4(.1f,.1f,.1f), .1f);
             Light l = new Light(lmaterial, false);
             l.position = new Vector3(0,15,5);
@@ -146,6 +146,7 @@ namespace Aura.Core
             //Debug: Particles
             
             b = new Billboard(leaf, BillboardLockType.Spherical);
+            b.Dimention = new Vector2(.1f, .1f);
             PointVisualization v = new PointVisualization();
 
             ps = new ParticleSystem(300, b, FunctionAssets.LinearInterpolation, new ColorRange(new Color4(1, 1, 1)), FunctionAssets.LinearInterpolation, new Range(.1f));

@@ -20,7 +20,7 @@ namespace Aura.Core
             R = r;
             G = g;
             B = b;
-            A = MAX_VALUE;
+            A = 1;
         }
         public Color4(float r, float g, float b, float a)
         {

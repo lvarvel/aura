@@ -34,39 +34,12 @@ namespace Aura.Graphics
 
         public void Draw(DrawArgs args)
         {
-            Gl.glPushMatrix();
-            Gl.glTranslatef(args.Position.X, args.Position.Y, args.Position.Z);
-            configBillboard(args.Position);
             
-
-            //Draw the billboard with texture coordinates
-            Gl.glBindTexture(Gl.GL_TEXTURE_2D, (int)Image);
-
+            Vector3 c_pos = CameraManager.Current.position;
+            float c_dist = (float)(Math.Pow(args.Position.X - c_pos.X, 2) + Math.Pow(args.Position.Y - c_pos.Y, 2) + Math.Pow(args.Position.Y - c_pos.Y, 2));
             
-            if (args.LightingEnabled)
-            {
-                Gl.glEnable(Gl.GL_LIGHTING);
-                if (args._Material == null) throw new ArgumentNullException();
-                args._Material.ApplyMaterial();
-            }
-            else
-            {
-                if (args.Color == null) throw new ArgumentNullException();
-                Gl.glColor4fv((float[])args.Color);
-            }
-
-            Gl.glBegin(Gl.GL_POLYGON);
-            Gl.glTexCoord2f(1, 1); Gl.glVertex3d(args.Scale.X, args.Scale.Y, 0);
-            Gl.glTexCoord2f(0, 1); Gl.glVertex3d(-args.Scale.X, args.Scale.Y, 0);
-            Gl.glTexCoord2f(0, 0); Gl.glVertex3d(-args.Scale.X, -args.Scale.Y, 0);
-            Gl.glTexCoord2f(1, 0); Gl.glVertex3d(args.Scale.X, -args.Scale.Y, 0);
-            Gl.glEnd();
-
-            if (LockType == BillboardLockType.Cylindrical || LockType == BillboardLockType.Spherical)
-            {
-                Gl.glPopMatrix();
-            }
-            Gl.glPopMatrix();
+            BatchEntry r = new BatchEntry(this, c_dist, (DrawArgs)args.Clone());
+            BatchManager.Current.Add(r);
         }
         public void Draw(Vector3 position)
         {
@@ -88,7 +61,46 @@ namespace Aura.Graphics
             }
         }
 
-        private void configBillboard(Vector3 position)
+        internal virtual void DepthDraw(DrawArgs args)
+        {
+            Gl.glPushMatrix();
+            Gl.glTranslatef(args.Position.X, args.Position.Y, args.Position.Z);
+            configBillboard(args.Position);
+
+
+            //Draw the billboard with texture coordinates
+            Gl.glBindTexture(Gl.GL_TEXTURE_2D, (int)Image);
+
+
+            if (args.LightingEnabled)
+            {
+                Gl.glEnable(Gl.GL_LIGHTING);
+                if (args._Material == null) throw new ArgumentNullException();
+                args._Material.ApplyMaterial();
+            }
+            else
+            {
+                if (args.Color == null) throw new ArgumentNullException();
+                Gl.glColor4fv((float[])args.Color);
+            }
+
+            Gl.glScalef(.2f,.2f,.2f);
+
+            Gl.glBegin(Gl.GL_POLYGON);
+            Gl.glTexCoord2f(1, 1); Gl.glVertex3d(args.Scale.X, args.Scale.Y, 0);
+            Gl.glTexCoord2f(0, 1); Gl.glVertex3d(-args.Scale.X, args.Scale.Y, 0);
+            Gl.glTexCoord2f(0, 0); Gl.glVertex3d(-args.Scale.X, -args.Scale.Y, 0);
+            Gl.glTexCoord2f(1, 0); Gl.glVertex3d(args.Scale.X, -args.Scale.Y, 0);
+            Gl.glEnd();
+
+            if (LockType == BillboardLockType.Cylindrical || LockType == BillboardLockType.Spherical)
+            {
+                Gl.glPopMatrix();
+            }
+            Gl.glPopMatrix();
+        }
+
+        protected void configBillboard(Vector3 position)
         {
             //Shamelessly stolen from http://www.lighthouse3d.com/opengl/billboarding/index.php?billSphe
             if (LockType == BillboardLockType.Cylindrical || LockType == BillboardLockType.Spherical)
