@@ -20,6 +20,23 @@ namespace Aura.Core
                         Dispose();
                         return;
                     }
+                    else if (sdl_event.key.keysym.sym == 'n')
+                    {
+                        rotation += (float)(Math.PI / 100);
+                        Vector3 newPos = new Vector3((float)Math.Cos(rotation), 0, (float)Math.Sin(rotation));
+                        newPos = newPos * 25;
+                        newPos.Y = 10;
+                        CameraManager.Current.position = newPos;
+                    }
+                    else if (sdl_event.key.keysym.sym == 'm')
+                    {
+                        rotation -= (float)(Math.PI / 100);
+
+                        Vector3 newPos = new Vector3((float)Math.Cos(rotation), 0, (float)Math.Sin(rotation));
+                        newPos = newPos * 25;
+                        newPos.Y = 10;
+                        CameraManager.Current.position = newPos;
+                    }
                     break;
                 case Sdl.SDL_MOUSEBUTTONDOWN:
                     if (sdl_event.button.button == Sdl.SDL_BUTTON_LEFT)

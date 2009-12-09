@@ -9,6 +9,8 @@ namespace Aura.Graphics.Assets
     {
         public TreeBranch Root;
         public Billboard billBoard;
+        public static Billboard fire;
+        public static ParticleSystem flames;
         internal DrawArgs args;
         public Vector3 Position;
 
@@ -31,16 +33,14 @@ namespace Aura.Graphics.Assets
         public void Draw()
         {
             Gl.glPushMatrix();
-            Gl.glTranslatef(Position.X, Position.Y, Position.Z);
+            //Gl.glTranslatef(Position.X, Position.Y, Position.Z);
             Gl.glScalef(1, 1, 1);
             Gl.glDisable(Gl.GL_LIGHTING);
             Root.Draw();
 
-            BatchManager.Current.Draw();
-            BatchManager.Current.Clear();
 
             if(LightManager.LightingEnabled)
-                Gl.glEnable(Gl.GL_LIGHTING);
+               Gl.glEnable(Gl.GL_LIGHTING);
             Gl.glPopMatrix();
         }
 
@@ -117,6 +117,7 @@ namespace Aura.Graphics.Assets
 
         public override void Draw()
         {
+            Gl.glPushMatrix();
             if (Parent != null)
             {
                 Gl.glLineWidth(3);
@@ -130,12 +131,15 @@ namespace Aura.Graphics.Assets
             {
                 p.Draw();
             }
+            Gl.glPopMatrix();
         }
     }
 
     public class TreeLeaf : TreePart
     {
         internal Billboard leaf;
+        internal Emitter fire;
+        public bool ON_FIRE = true;
 
         internal TreeLeaf(Vector3 position, Billboard b, TreeBranch parent, Tree root)
         {
@@ -143,6 +147,13 @@ namespace Aura.Graphics.Assets
             leaf = b;
             Parent = parent;
             Root = root;
+
+            List<ParticleSystem> f = new List<ParticleSystem> { Tree.flames };
+            fire = new EmitterBase(1, //75 umm... MS?
+                f, //This should be self-explanatory
+                DirectionalClamp.ZeroClamp, //Nothing in the Negative Y
+                Util.r.Next(), //Seed the RNG
+                false);  //Repeat!
         }
 
         public override void Draw()

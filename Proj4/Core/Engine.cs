@@ -20,6 +20,10 @@ namespace Aura.Core
         internal static Engine Instance;
         internal string windowName;
         public bool Disposed = false;
+        internal List<Tree> Forest = new List<Tree>();
+
+        internal EmitterBase Fire;
+        internal ParticleSystem Flames;
 
         internal TimerManager timerManager = TimerManager.Instance;
 
@@ -30,6 +34,7 @@ namespace Aura.Core
         Explosion mrExplody;
         ParticleSystem ps;
         Tree tree;
+        float rotation = 0;
 
         public Engine(int screenWidth = 800, int screenHeight = 600, string window_name = "Aura Particle Simulator")
         {
@@ -79,7 +84,14 @@ namespace Aura.Core
             
             //Glu.gluSphere(Glu.gluNewQuadric(), 1, 36, 36);
             m.Draw();
-            tree.Draw();
+            bool first = true;
+            foreach (Tree t in Forest)
+            {
+                t.Draw();
+            }
+
+            BatchManager.Current.Draw();
+            BatchManager.Current.Clear();
 
             mrExplody.Draw();
             //ps.Draw();
@@ -150,7 +162,31 @@ namespace Aura.Core
             l.position = new Vector3(0,15,5);
             LightManager.Lights.Add(l);
             m = new Model(ObjImporter.Instance.ImportContent("Data/plane.obj"), t);
-            m.scale = 1f;
+            m.scale = 2f;
+
+            Billboard particleBillboard = new Billboard(TextureImporter.Instance.ImportContent("Data/particle.png"));
+            particleBillboard.Dimention = new Vector2(.1f, .1f);
+
+            /* Create the particle systems for the core of the explosion */
+            List<ParticleSystem> fireParticleSystems = new List<ParticleSystem>();
+            Flames = new ParticleSystem(
+                10f,  // 5... um.... units.
+                particleBillboard,   //Using particle.png as the texture
+                new Color4InterpolationHandler(FunctionAssets.LinearInterpolation),  //Linear Interpolation for color
+                new ColorRange(new Color4(1, 1, 0, 1), new Color4(1, 0, 0, .3f)),   // Yellow to Red
+                new FloatInterpolationHandler(FunctionAssets.LinearInterpolation),  //Linear Interpolation for speed
+                new Range(1.0f, 0.0f));
+            Flames.Count = 500;
+            fireParticleSystems.Add(Flames);         //Speed from 1.0 to 0.0
+
+            /* Build the core of the explosion */
+            Fire = new EmitterBase(1, //75 umm... MS?
+                fireParticleSystems, //This should be self-explanatory
+                DirectionalClamp.ZeroClamp, //Nothing in the Negative Y
+                Util.r.Next(), //Seed the RNG
+                false);  //Repeat!
+
+            Tree.flames = Flames;
 
             //Debug: Particles
             
@@ -160,8 +196,12 @@ namespace Aura.Core
 
             ps = new ParticleSystem(300, b, 0.15f, FunctionAssets.LinearInterpolation, new ColorRange(new Color4(1, 1, 1)), FunctionAssets.LinearInterpolation, new Range(.1f));
             ps.Count = 5;
-            tree = new Tree(new Vector3(0,0,0), 3.0f, 1.5f, .3f, 3, 3, b);
-            
+            for (int i = 0; i < 10; ++i)
+            {
+                Vector3 rand = new Vector3((float)(Util.r.NextDouble() * Util.r.NextSign() * 4), 0, (float)(Util.r.NextDouble() * Util.r.NextSign() * 4));
+                tree = new Tree(rand, 3.0f, 1.5f, .3f, 3, 3, b);
+                Forest.Add(tree);
+            }
             ParticleSystem[] tps = { ps };
             //e = new EmitterBase(1, tps, DirectionalClamp.ZeroClamp, null, true);
             #endregion

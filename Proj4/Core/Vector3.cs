@@ -105,6 +105,11 @@ namespace Aura.Core
             data[2] = z;
         }
 
+        public float Distance(Vector3 rhs)
+        {
+            return (float)Math.Sqrt(Math.Pow(X - rhs.X, 2) + Math.Pow(Y - rhs.Y, 2) + Math.Pow(Z - rhs.Z, 2));
+        }
+
         [UnitTestMethod]
         public static void TestVector(TestResults results)
         {

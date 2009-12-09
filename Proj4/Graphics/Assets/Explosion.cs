@@ -53,6 +53,7 @@ namespace Aura.Graphics.Assets
                 new DirectionalClamp(ClampState.None, ClampState.Positive, ClampState.None), //Nothing in the Negative Y
                 random.Next(), //Seed the RNG
                 false);  //Repeat!
+
             dust.Emit();
             #endregion
 
