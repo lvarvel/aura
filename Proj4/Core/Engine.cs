@@ -190,11 +190,11 @@ namespace Aura.Core
 
             //Debug: Particles
             
-            b = new Billboard(leaf, BillboardLockType.Spherical);
+            b = new Billboard(leaf, BillboardLockType.Spherical, 0.2f);
             b.Dimention = new Vector2(.1f, .1f);
             PointVisualization v = new PointVisualization();
 
-            ps = new ParticleSystem(300, b, FunctionAssets.LinearInterpolation, new ColorRange(new Color4(1, 1, 1)), FunctionAssets.LinearInterpolation, new Range(.1f));
+            ps = new ParticleSystem(300, b, 0.15f, FunctionAssets.LinearInterpolation, new ColorRange(new Color4(1, 1, 1)), FunctionAssets.LinearInterpolation, new Range(.1f));
             ps.Count = 5;
             for (int i = 0; i < 10; ++i)
             {

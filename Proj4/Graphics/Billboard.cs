@@ -16,13 +16,15 @@ namespace Aura.Graphics
         public Material Color;
         public Vector2 Dimention;
         public BillboardLockType LockType;
+        public float scale;
 
-        public Billboard(Texture image, BillboardLockType lockType = BillboardLockType.Spherical)
+        public Billboard(Texture image, BillboardLockType lockType = BillboardLockType.Spherical, float scalefactor = 1.0f)
         {
             Image = image;
             Color = null;
             Dimention = new Vector2(1,1);
             LockType = lockType;
+            scale = scalefactor;
         }
         public Billboard(Texture image, Material color, Vector2 dimention, BillboardLockType lockType = BillboardLockType.Spherical)
         {
@@ -84,7 +86,7 @@ namespace Aura.Graphics
                 Gl.glColor4fv((float[])args.Color);
             }
 
-            Gl.glScalef(.2f,.2f,.2f);
+            Gl.glScalef(scale, scale, scale);
 
             Gl.glBegin(Gl.GL_POLYGON);
             Gl.glTexCoord2f(1, 1); Gl.glVertex3d(args.Scale.X, args.Scale.Y, 0);

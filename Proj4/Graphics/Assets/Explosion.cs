@@ -29,43 +29,75 @@ namespace Aura.Graphics.Assets
             Random random = new Random();
             explosionPos = position;
 
-            Billboard particleBillboard = new Billboard(TextureImporter.Instance.ImportContent("Data/particle.png"));
-            particleBillboard.Dimention = new Vector2(.1f, .1f);
+            #region Dust
+            Billboard dustParticleBillboard = new Billboard(TextureImporter.Instance.ImportContent("Data/particle.png"));
+            dustParticleBillboard.Dimention = new Vector2(.1f, .1f);
              
-            /* Create the particle systems for the core of the explosion */
+            /* Create the particle systems for the dust of the explosion */
             List<ParticleSystem> dustParticleSystems = new List<ParticleSystem>();
             ParticleSystem shockwave = new ParticleSystem(
-                10f,  // 5... um.... units.
-                particleBillboard,   //Using particle.png as the texture
+                20f,  // 10... um.... units.
+                dustParticleBillboard,   //Using particle.png as the texture
+                1.0f,
                 new Color4InterpolationHandler(FunctionAssets.LinearInterpolation),  //Linear Interpolation for color
-                new ColorRange(new Color4(1, 1, 1, 1), new Color4(0, 0, 0, 1)),   // Yellow to Red
+                new ColorRange(new Color4(0.250f, 0.135f, 0.0372f, 1), new Color4(0.543f, 0.270f, 0.0742f, 0.0f)),   // Brown, removing Alpha
                 new FloatInterpolationHandler(FunctionAssets.LinearInterpolation),  //Linear Interpolation for speed
-                new Range(1.0f, 0.0f));
+                new Range(0.75f, 0.0f));
             shockwave.Count = 500;
             dustParticleSystems.Add(shockwave);         //Speed from 1.0 to 0.0
             
-            /* Build the core of the explosion */
+            /* Build the dust */
             dust = new EmitterBase(75, //75 umm... MS?
                 dustParticleSystems, //This should be self-explanatory
                 new DirectionalClamp(ClampState.None, ClampState.Positive, ClampState.None), //Nothing in the Negative Y
                 random.Next(), //Seed the RNG
                 false);  //Repeat!
-            core = new EmitterBase(100, dustParticleSystems, DirectionalClamp.ZeroClamp);
+
+            dust.Emit();
+            #endregion
+
+            #region Core
+            Billboard coreParticleBillboard = new Billboard(TextureImporter.Instance.ImportContent("Data/particle.png"), BillboardLockType.Spherical, 1.0f);
+            coreParticleBillboard.Dimention = new Vector2(0.5f, .05f);
+
+            /* Create the particle systems for the core of the explosion */
+            List<ParticleSystem> coreParticleSystems = new List<ParticleSystem>();
+            ParticleSystem hotcore = new ParticleSystem(
+                10f,  // 10... um.... units.
+                coreParticleBillboard,   //Using particle.png as the texture
+                0.1f,
+                new Color4InterpolationHandler(FunctionAssets.LinearInterpolation),  //Linear Interpolation for color
+                new ColorRange(new Color4(1.0f, 1.0f, 1.0f, 1.0f), new Color4(1.0f, 0.9f, 0.0f, 1.0f)),   // Yellow-orange, going dark
+                new FloatInterpolationHandler(FunctionAssets.LinearInterpolation),  //Linear Interpolation for speed
+                new Range(0.75f, 0.0f));
+            hotcore.Count = 100;
+            coreParticleSystems.Add(hotcore);         //Speed from 1.0 to 0.0
+
+            /* Build the core of the explosion */
+            core = new EmitterBase(75, //75 umm... MS?
+                coreParticleSystems, //This should be self-explanatory
+                new DirectionalClamp(ClampState.None, ClampState.Negative, ClampState.None), //Nothing in the Negative Y
+                random.Next(), //Seed the RNG
+                false);  //Repeat!
             core.Emit();
+            #endregion
         }
 
         public void Draw()
         {
             Gl.glPushMatrix();
             Gl.glTranslatef(explosionPos.X, explosionPos.Y, explosionPos.Z);
-            Gl.glScalef(1, 1, 1);
             Gl.glDisable(Gl.GL_LIGHTING);
+            foreach (ParticleSystem p in dust.Systems)
+            {
+                p.Update();
+                p.Draw();
+            }
             foreach (ParticleSystem p in core.Systems)
             {
                 p.Update();
                 p.Draw();
             }
-
 
             BatchManager.Current.Draw();
             BatchManager.Current.Clear();
@@ -79,6 +111,10 @@ namespace Aura.Graphics.Assets
 
         public void Update()
         {
+            foreach (ParticleSystem p in dust.Systems)
+            {
+                p.Update();
+            }
             foreach (ParticleSystem p in core.Systems)
             {
                 p.Update();

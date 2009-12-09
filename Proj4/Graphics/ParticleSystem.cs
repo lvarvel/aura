@@ -110,6 +110,8 @@ namespace Aura.Graphics
         { 
             get { return emitters; } 
         }
+
+        public float scale = 1.0f; //Scale Factor
         #endregion
 
         #region Constructors
@@ -117,9 +119,10 @@ namespace Aura.Graphics
         {
             constantForce = new Vector3(0,0,0);
         }
-        public ParticleSystem(float max_life, IVisualization _visualization = null, Color4InterpolationHandler color_handler = null, ColorRange color_range = null,
+        public ParticleSystem(float max_life, IVisualization _visualization = null, float scalefactor = 1.0f, Color4InterpolationHandler color_handler = null, ColorRange color_range = null,
             FloatInterpolationHandler speed_handler = null, Range speed_range = null)
         {
+            scale = scalefactor;
             maxLife = max_life;
             colorHandler = color_handler;
             colorRange = color_range;
@@ -152,6 +155,8 @@ namespace Aura.Graphics
 
         public virtual void Draw()
         {
+            Tao.OpenGl.Gl.glPushMatrix();
+            Tao.OpenGl.Gl.glScalef(scale, scale, scale);
             DrawArgs args = new DrawArgs(new Vector3(), Color4.White);
             Vector3 s = new Vector3();
             Vector3 v = new Vector3();
@@ -169,6 +174,7 @@ namespace Aura.Graphics
 
                 visualization.Draw(args);
             }
+            Tao.OpenGl.Gl.glPopMatrix();
         }
 
         public virtual void AddParticle(Vector3 position, Vector3 velocity)
