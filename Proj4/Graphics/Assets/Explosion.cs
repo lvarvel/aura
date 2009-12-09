@@ -11,7 +11,7 @@ namespace Aura.Graphics.Assets
     public class Explosion : Object3D, IDrawable
     {
         EmitterBase core;
-        EmitterBase fireBall;
+        EmitterBase fireball;
         EmitterBase smoke;
         EmitterBase dust;
         EmitterBase rays;
@@ -75,7 +75,7 @@ namespace Aura.Graphics.Assets
             coreParticleSystems.Add(hotcore);         //Speed from 1.0 to 0.0
 
             /* Build the core of the explosion */
-            core = new EmitterBase(75, //75 umm... MS?
+            core = new EmitterBase(35, //75 umm... MS?
                 coreParticleSystems, //This should be self-explanatory
                 new DirectionalClamp(ClampState.None, ClampState.Negative, ClampState.None), //Nothing in the Negative Y
                 random.Next(), //Seed the RNG
@@ -90,23 +90,49 @@ namespace Aura.Graphics.Assets
             /* Create the particle systems for the sparks */
             List<ParticleSystem> sparkParticleSystems = new List<ParticleSystem>();
             ParticleSystem sparkles = new ParticleSystem(
-                10f,  // 10... um.... units.
+                17f,  // 10... um.... units.
                 sparkParticleBillboard,   //Using particle.png as the texture
                 0.1f,
                 new Color4InterpolationHandler(FunctionAssets.LinearInterpolation),  //Linear Interpolation for color
-                new ColorRange(new Color4(1.0f, 1.0f, 1.0f, 1.0f), new Color4(1.0f, 0.9f, 0.0f, 1.0f)),   // White, going yellow
+                new ColorRange(new Color4(1.0f, 1.0f, 1.0f, 1.0f), new Color4(1.0f, 0.0f, 0.0f, 1.0f)),   // White, going yellow
                 new FloatInterpolationHandler(FunctionAssets.LinearInterpolation),  //Linear Interpolation for speed
-                new Range(0.75f, 0.0f));
+                new Range(0.85f, 0.0f));
             sparkles.Count = 100;
-            coreParticleSystems.Add(sparkles);         //Speed from 1.0 to 0.0
+            sparkParticleSystems.Add(sparkles);         //Speed from 1.0 to 0.0
 
             /* Build the sparks */
-            core = new EmitterBase(75, //75 umm... MS?
-                coreParticleSystems, //This should be self-explanatory
+            sparks = new EmitterBase(75, //75 umm... MS?
+                sparkParticleSystems, //This should be self-explanatory
+                new DirectionalClamp(ClampState.None, ClampState.None, ClampState.None), //Nothing in the Negative Y
+                random.Next(), //Seed the RNG
+                false);  //Repeat!
+            sparks.Emit();
+            #endregion
+
+            #region Fireball
+            Billboard fireParticleBillboard = new Billboard(TextureImporter.Instance.ImportContent("Data/dust_billboard2.png"), BillboardLockType.Spherical, 0.75f);
+            fireParticleBillboard.Dimention = new Vector2(0.5f, .05f);
+
+            /* Create the particle systems for the fire */
+            List<ParticleSystem> fireParticleSystems = new List<ParticleSystem>();
+            ParticleSystem fire = new ParticleSystem(
+                14f,  // 10... um.... units.
+                fireParticleBillboard,   //Using particle.png as the texture
+                0.1f,
+                new Color4InterpolationHandler(FunctionAssets.LinearInterpolation),  //Linear Interpolation for color
+                new ColorRange(new Color4(1.0f, 1.0f, 0.1f, 1.0f), new Color4(1.0f, 0.0f, 0.0f, 0.1f)),   // White, going red
+                new FloatInterpolationHandler(FunctionAssets.LinearInterpolation),  //Linear Interpolation for speed
+                new Range(0.65f, 0.0f));
+            fire.Count = 100;
+            fireParticleSystems.Add(fire);         //Speed from 1.0 to 0.0
+
+            /* Build the sparks */
+            fireball = new EmitterBase(75, //75 umm... MS?
+                fireParticleSystems, //This should be self-explanatory
                 new DirectionalClamp(ClampState.None, ClampState.Negative, ClampState.None), //Nothing in the Negative Y
                 random.Next(), //Seed the RNG
                 false);  //Repeat!
-            core.Emit();
+            fireball.Emit();
             #endregion
         }
 
@@ -121,6 +147,16 @@ namespace Aura.Graphics.Assets
                 p.Draw();
             }
             foreach (ParticleSystem p in core.Systems)
+            {
+                p.Update();
+                p.Draw();
+            }
+            foreach (ParticleSystem p in sparks.Systems)
+            {
+                p.Update();
+                p.Draw();
+            }
+            foreach (ParticleSystem p in fireball.Systems)
             {
                 p.Update();
                 p.Draw();
@@ -143,6 +179,10 @@ namespace Aura.Graphics.Assets
                 p.Update();
             }
             foreach (ParticleSystem p in core.Systems)
+            {
+                p.Update();
+            }
+            foreach (ParticleSystem p in fireball.Systems)
             {
                 p.Update();
             }
