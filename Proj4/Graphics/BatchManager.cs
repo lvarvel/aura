@@ -62,6 +62,7 @@ namespace Aura.Graphics
             }
             Gl.glDepthMask(Gl.GL_TRUE);
             Gl.glDisable(Gl.GL_BLEND);
+            
         }
     }
 }
