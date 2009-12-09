@@ -164,14 +164,16 @@ namespace Aura.Core
             m = new Model(ObjImporter.Instance.ImportContent("Data/plane.obj"), t);
             m.scale = 2f;
 
-            Billboard particleBillboard = new Billboard(TextureImporter.Instance.ImportContent("Data/particle.png"));
+            Billboard particleBillboard = new Billboard(TextureImporter.Instance.ImportContent("Data/particle.png"), BillboardLockType.Spherical, 0.2f);
             particleBillboard.Dimention = new Vector2(.1f, .1f);
 
             /* Create the particle systems for the core of the explosion */
+            
             List<ParticleSystem> fireParticleSystems = new List<ParticleSystem>();
             Flames = new ParticleSystem(
                 10f,  // 5... um.... units.
                 particleBillboard,   //Using particle.png as the texture
+                .5f, //scale = 1/2
                 new Color4InterpolationHandler(FunctionAssets.LinearInterpolation),  //Linear Interpolation for color
                 new ColorRange(new Color4(1, 1, 0, 1), new Color4(1, 0, 0, .3f)),   // Yellow to Red
                 new FloatInterpolationHandler(FunctionAssets.LinearInterpolation),  //Linear Interpolation for speed
@@ -179,7 +181,7 @@ namespace Aura.Core
             Flames.Count = 500;
             fireParticleSystems.Add(Flames);         //Speed from 1.0 to 0.0
 
-            /* Build the core of the explosion */
+ 
             Fire = new EmitterBase(1, //75 umm... MS?
                 fireParticleSystems, //This should be self-explanatory
                 DirectionalClamp.ZeroClamp, //Nothing in the Negative Y
@@ -187,7 +189,7 @@ namespace Aura.Core
                 false);  //Repeat!
 
             Tree.flames = Flames;
-
+            
             //Debug: Particles
             
             b = new Billboard(leaf, BillboardLockType.Spherical, 0.2f);
@@ -196,9 +198,9 @@ namespace Aura.Core
 
             ps = new ParticleSystem(300, b, 0.15f, FunctionAssets.LinearInterpolation, new ColorRange(new Color4(1, 1, 1)), FunctionAssets.LinearInterpolation, new Range(.1f));
             ps.Count = 5;
-            for (int i = 0; i < 10; ++i)
+            for (int i = 0; i < 20; ++i)
             {
-                Vector3 rand = new Vector3((float)(Util.r.NextDouble() * Util.r.NextSign() * 4), 0, (float)(Util.r.NextDouble() * Util.r.NextSign() * 4));
+                Vector3 rand = new Vector3((float)(Util.r.NextDouble() * Util.r.NextSign() * 8), 0, (float)(Util.r.NextDouble() * Util.r.NextSign() * 8));
                 tree = new Tree(rand, 3.0f, 1.5f, .3f, 3, 3, b);
                 Forest.Add(tree);
             }

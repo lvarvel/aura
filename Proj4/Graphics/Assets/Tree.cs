@@ -139,7 +139,7 @@ namespace Aura.Graphics.Assets
     {
         internal Billboard leaf;
         internal Emitter fire;
-        public bool ON_FIRE = true;
+        public bool ON_FIRE = false;
 
         internal TreeLeaf(Vector3 position, Billboard b, TreeBranch parent, Tree root)
         {
@@ -148,18 +148,36 @@ namespace Aura.Graphics.Assets
             Parent = parent;
             Root = root;
 
+            
+            
+             
+        }
+
+        public void OnSetOnFire()
+        {
             List<ParticleSystem> f = new List<ParticleSystem> { Tree.flames };
             fire = new EmitterBase(1, //75 umm... MS?
                 f, //This should be self-explanatory
                 DirectionalClamp.ZeroClamp, //Nothing in the Negative Y
                 Util.r.Next(), //Seed the RNG
                 false);  //Repeat!
+            ON_FIRE = true;
         }
 
         public override void Draw()
         {
-            Root.args.Position = Position;
-            leaf.Draw(Root.args);
+            if (!ON_FIRE)
+            {
+                Root.args.Color = new Color4(0, .5f, 0);
+                Root.args.Position = Position;
+                leaf.Draw(Root.args);
+            }
+            else
+            {
+                Root.args.Color = new Color4(0, 0, 0);
+                Root.args.Position = Position;
+                leaf.Draw(Root.args);
+            }
         }
     }
 }
