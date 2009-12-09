@@ -5,6 +5,7 @@ using Tao.OpenGl;
 
 namespace Aura.Graphics
 {
+    /*
     public class ExplosionBillboard : Billboard
     {
         public Vector3 Center;
@@ -37,6 +38,6 @@ namespace Aura.Graphics
             }
             Gl.glPopMatrix();
         }
-        }
     }
+     */
 }

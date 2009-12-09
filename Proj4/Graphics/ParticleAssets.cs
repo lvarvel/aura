@@ -16,7 +16,10 @@ namespace Aura.Graphics
         }
         public static Color4 AlphaSpike(ColorRange range, float p)
         {
-
+            Color4 newColor = range.First;
+            newColor = (range.Second - range.First) * p;
+            newColor.A = (float)(newColor.A % 0.5);
+            return newColor;
         }
     }
 }

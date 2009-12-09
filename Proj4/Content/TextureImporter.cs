@@ -9,7 +9,7 @@ namespace Aura.Content
     {
         private Dictionary<string, Texture> buffer = new Dictionary<string, Texture>();
 
-        private TextureImporter() { }
+        public TextureImporter() { }
 
         /// <summary>
         /// Processes an image at specified path directly into openGL

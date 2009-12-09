@@ -27,6 +27,7 @@ namespace Aura.Core
         Model m;
         Billboard b;
         Emitter e;
+        Explosion mrExplody;
         ParticleSystem ps;
         Tree tree;
 
@@ -79,6 +80,7 @@ namespace Aura.Core
             m.Draw();
             tree.Draw();
 
+            mrExplody.Draw();
             //ps.Draw();
 
             Gl.glPopMatrix();
@@ -89,7 +91,9 @@ namespace Aura.Core
             //m.rotation = m.rotation * new Quaternion((float)(Math.PI / 100), 0,1,0 );
 
             //Debug particles
-            //ps.Update();
+            ps.Update();
+
+            mrExplody.Update();
         }
 
         /// <summary>
@@ -108,7 +112,7 @@ namespace Aura.Core
 
             #region Initialize openGL
             Gl.glViewport(0, 0, x, y);
-            Gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+            Gl.glClearColor(0.8f, 0.8f, 0.8f, 1.0f);
             Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
             Sdl.SDL_GL_SetAttribute(Sdl.SDL_GL_DEPTH_SIZE, 16);
             Gl.glEnableClientState(Gl.GL_VERTEX_ARRAY);
@@ -130,6 +134,10 @@ namespace Aura.Core
             #endregion
 
             CameraManager.SetCamera("Default", new Camera(new Vector3(10, 10, 10), new Vector3(0, 0, 0)));
+
+            #region Set up explosion
+            mrExplody = new Explosion(new Vector3(1, 1, 1), 5.0f, 5.0f);
+            #endregion
 
             #region DEBUG
             //DEBUG: LIGHTING (BROKEN)

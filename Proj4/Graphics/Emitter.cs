@@ -13,7 +13,7 @@ namespace Aura.Graphics
         #region Fields
         public Range VelocityFactor;
         public Timer Timer;
-        public List<ParticleSystem> ParticleSystems = new List<ParticleSystem>();
+        public List<ParticleSystem> Systems;
         
 
         private Random random;
@@ -24,13 +24,13 @@ namespace Aura.Graphics
         {
             random = new Random();
         }
-        protected Emitter(double period, IEnumerable<ParticleSystem> particleSystems, int? rSeed = null, bool repeat = false) 
+        protected Emitter(double period, List<ParticleSystem> particleSystems, int? rSeed = null, bool repeat = false) 
             : base()
         {
             random = (!rSeed.HasValue) ? new Random() : new Random(rSeed.Value);
+            Systems = particleSystems;
             foreach (ParticleSystem p in particleSystems)
             {
-                ParticleSystems.Add(p);
                 p.Emitters.Add(this);
             }
             Timer = new Timer(period, repeat);
@@ -50,7 +50,7 @@ namespace Aura.Graphics
         {
             Timer.Dispose();
             Timer = null;
-            ParticleSystems = null;
+            Systems = null;
         }
 
         public bool isRunning
@@ -71,7 +71,7 @@ namespace Aura.Graphics
 
         #region Constructors
         public EmitterBase() : base() { }
-        public EmitterBase(double period, IEnumerable<ParticleSystem> particleSystems,  DirectionalClamp clamp, int? rSeed = null, bool repeat = false)
+        public EmitterBase(double period, List<ParticleSystem> particleSystems, DirectionalClamp clamp, int? rSeed = null, bool repeat = false)
             : base(period, particleSystems, rSeed, repeat)
         {
             Clamp = clamp;
@@ -86,7 +86,7 @@ namespace Aura.Graphics
         public override void Emit()
         {
             Vector3 l_position = this.position;
-            foreach (ParticleSystem p in ParticleSystems)
+            foreach (ParticleSystem p in Systems)
             {
                 for (int i = 0; i < p.Count; ++i)
                 {
