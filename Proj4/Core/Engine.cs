@@ -54,8 +54,9 @@ namespace Aura.Core
                 Sdl.SDL_PollEvent(out sdlEvent);
                 this.HandleInput(sdlEvent);
 
-                timerManager.Update();
+                
                 Update();
+                timerManager.Update();
                 Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
                 Draw();
 
@@ -136,7 +137,7 @@ namespace Aura.Core
             CameraManager.SetCamera("Default", new Camera(new Vector3(10, 10, 10), new Vector3(0, 0, 0)));
 
             #region Set up explosion
-            mrExplody = new Explosion(new Vector3(1, 1, 1), 5.0f, 5.0f);
+            mrExplody = new Explosion(new Vector3(0, 0, 0), 5.0f, 5.0f);
             #endregion
 
             #region DEBUG

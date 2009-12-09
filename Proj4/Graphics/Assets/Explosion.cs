@@ -33,23 +33,23 @@ namespace Aura.Graphics.Assets
             particleBillboard.Dimention = new Vector2(.1f, .1f);
              
             /* Create the particle systems for the core of the explosion */
-            List<ParticleSystem> coreParticleSystems = new List<ParticleSystem>();
-            ParticleSystem test = new ParticleSystem(
-                3.0f,  // 3 second lifetime
+            List<ParticleSystem> dustParticleSystems = new List<ParticleSystem>();
+            ParticleSystem shockwave = new ParticleSystem(
+                10f,  // 5... um.... units.
                 particleBillboard,   //Using particle.png as the texture
                 new Color4InterpolationHandler(FunctionAssets.LinearInterpolation),  //Linear Interpolation for color
-                new ColorRange(new Color4(1, 1, 0, 1), new Color4(1, 0, 0, 1)),   // Yellow to Red
+                new ColorRange(new Color4(1, 1, 1, 1), new Color4(0, 0, 0, 1)),   // Yellow to Red
                 new FloatInterpolationHandler(FunctionAssets.LinearInterpolation),  //Linear Interpolation for speed
                 new Range(1.0f, 0.0f));
-            test.Count = 500;
-            coreParticleSystems.Add(test);         //Speed from 1.0 to 0.0
+            shockwave.Count = 500;
+            dustParticleSystems.Add(shockwave);         //Speed from 1.0 to 0.0
             
             /* Build the core of the explosion */
-            core = new EmitterBase(5.0, //Five seconds long
-                coreParticleSystems, //This should be self-explanatory
+            dust = new EmitterBase(75, //75 umm... MS?
+                dustParticleSystems, //This should be self-explanatory
                 new DirectionalClamp(ClampState.None, ClampState.Positive, ClampState.None), //Nothing in the Negative Y
                 random.Next(), //Seed the RNG
-                true);  //Repeat!
+                false);  //Repeat!
             core.Emit();
         }
 

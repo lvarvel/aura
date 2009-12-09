@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Tao.Sdl;
+using Aura.Graphics.Assets;
 
 namespace Aura.Core
 {
@@ -17,6 +18,13 @@ namespace Aura.Core
                     if (sdl_event.key.keysym.sym == Sdl.SDLK_ESCAPE)
                     {
                         Dispose();
+                        return;
+                    }
+                    break;
+                case Sdl.SDL_MOUSEBUTTONDOWN:
+                    if (sdl_event.button.button == Sdl.SDL_BUTTON_LEFT)
+                    {
+                        this.mrExplody = new Explosion(new Vector3(1, 1, 1), 0f, 5.0f);
                         return;
                     }
                     break;
