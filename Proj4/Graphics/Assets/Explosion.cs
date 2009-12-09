@@ -15,6 +15,7 @@ namespace Aura.Graphics.Assets
         EmitterBase smoke;
         EmitterBase dust;
         EmitterBase rays;
+        EmitterBase sparks;
 
         Billboard cloud;
         Billboard flash;
@@ -73,6 +74,32 @@ namespace Aura.Graphics.Assets
             coreParticleSystems.Add(hotcore);         //Speed from 1.0 to 0.0
 
             /* Build the core of the explosion */
+            core = new EmitterBase(75, //75 umm... MS?
+                coreParticleSystems, //This should be self-explanatory
+                new DirectionalClamp(ClampState.None, ClampState.Negative, ClampState.None), //Nothing in the Negative Y
+                random.Next(), //Seed the RNG
+                false);  //Repeat!
+            core.Emit();
+            #endregion
+
+            #region Sparks
+            Billboard sparkParticleBillboard = new Billboard(TextureImporter.Instance.ImportContent("Data/particle.png"), BillboardLockType.Spherical, 0.05f);
+            sparkParticleBillboard.Dimention = new Vector2(0.5f, .05f);
+
+            /* Create the particle systems for the sparks */
+            List<ParticleSystem> sparkParticleSystems = new List<ParticleSystem>();
+            ParticleSystem sparkles = new ParticleSystem(
+                10f,  // 10... um.... units.
+                sparkParticleBillboard,   //Using particle.png as the texture
+                0.1f,
+                new Color4InterpolationHandler(FunctionAssets.LinearInterpolation),  //Linear Interpolation for color
+                new ColorRange(new Color4(1.0f, 1.0f, 1.0f, 1.0f), new Color4(1.0f, 0.9f, 0.0f, 1.0f)),   // White, going yellow
+                new FloatInterpolationHandler(FunctionAssets.LinearInterpolation),  //Linear Interpolation for speed
+                new Range(0.75f, 0.0f));
+            sparkles.Count = 100;
+            coreParticleSystems.Add(sparkles);         //Speed from 1.0 to 0.0
+
+            /* Build the sparks */
             core = new EmitterBase(75, //75 umm... MS?
                 coreParticleSystems, //This should be self-explanatory
                 new DirectionalClamp(ClampState.None, ClampState.Negative, ClampState.None), //Nothing in the Negative Y
