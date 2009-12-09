@@ -60,6 +60,7 @@ namespace Aura.Core
             result.R *= rhs;
             result.G *= rhs;
             result.B *= rhs;
+            result.A *= rhs;
             return result;
         }
         public static Color4 operator +(Color4 lhs, Color4 rhs)
