@@ -34,6 +34,8 @@ namespace Aura.Content
     public interface IBuildable<T>
     {
         void Build(Descriptor<T> descriptor);
+        Descriptor<T> GetDescriptor { get; }
+        Type DescriptorType { get; }
     }
 
     

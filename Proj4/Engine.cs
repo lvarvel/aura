@@ -38,6 +38,8 @@ namespace Aura
                 this.HandleInput(sdlEvent);
 
                 Gl.glClear(Gl.GL_COLOR_BUFFER_BIT);
+
+                Sdl.SDL_GL_SwapBuffers();
             }
         }
 
@@ -54,7 +56,7 @@ namespace Aura
             Sdl.SDL_WM_SetCaption(windowName,windowName);
 
             Gl.glViewport(100, 100, x, y);
-            Gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+            Gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
             Gl.glClear(Gl.GL_COLOR_BUFFER_BIT);
         }
 

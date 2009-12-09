@@ -27,12 +27,21 @@ namespace Aura
 
     public static class UnitTester
     {
+        private static TestResults current;
+        private static string last_string;
+
         public static TestResults doUnitTest(String path)
         {
             Assembly a = Assembly.GetCallingAssembly();
             Type[] types = a.GetTypes();
             SortedList<int, Type> unitTestTypes = new SortedList<int, Type>();
-            TestResults results = new TestResults(path);
+            TestResults results;
+            if (current != null && last_string == path)
+            {
+                results = current;
+            }
+            else
+                results = new TestResults(path);
 
             foreach (Type t in types)
             {
@@ -44,8 +53,20 @@ namespace Aura
             }
             foreach (Type t in unitTestTypes.Values)
             {
+                results.ReportMessage("");
                 testClass(t, results);
             }
+
+            /*
+            if (!results.success)
+            {
+                results.WriteToFile();
+                throw new UnitTestException("Tests failed!", results, null);
+            }
+            */
+
+            current = results;
+            last_string = path;
 
             return results;
         }
@@ -69,8 +90,7 @@ namespace Aura
             }
             catch (Exception e)
             {
-                throw new UnitTestException("Error occured in method " + info.Name + ", in class " + t.Name + ".",
-                    results, e);
+                 results.ReportError("Exception occured in method " + info.Name + ", in class " + t.Name + "." + "\n" + e.Message);
             }
         }
     }

@@ -2,7 +2,14 @@ Test success!
 There are 0 errors.
 There are 0 warnings.
 
+
 Begining Test 1: Vector3 addition test
 Test 1 success.
 Begining Test 2: Vector cross product
 Test 2 success.
+
+Begining XMLImporterBase test.
+Begining xml content export test.
+Content has been exported.
+Test complete.
+String contents are: This is a test. Boop, boop, boooooooooooop!

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Aura.Content;
 
 namespace Aura
 {
@@ -8,7 +9,7 @@ namespace Aura
     /// particle system effects, create a class that encapsulates more than one
     /// ParticleSystem.
     /// </summary>
-    public class ParticleSystem : IDrawable, IDisposable
+    public class ParticleSystem : IDrawable, IDisposable, IBuildable<ParticleSystem>
     {
         #region Declarations
         /// <summary>
@@ -46,6 +47,7 @@ namespace Aura
         public float maxLife;
         #endregion
 
+        #region Constructors
         public ParticleSystem()
         {
             constantForce = new Vector3(0,0,0);
@@ -60,7 +62,9 @@ namespace Aura
             speedRange = speed_range;
             visualization = _visualization;
         }
+        #endregion
 
+        #region Methods
         public virtual void Update()
         {
             //TODO
@@ -84,6 +88,56 @@ namespace Aura
             }
             particles.Clear();
         }
+        #endregion
+
+        #region IBuildable Members
+        public void Build(Descriptor<ParticleSystem> descriptor)
+        {
+            var d = descriptor as ParticleSystemDescriptor;
+
+            colorRange = d.colorRange;
+            speedRange = d.speedRange;
+            constantForce = d.constantForce;
+            visualization = d.visualization;
+            maxLife = d.maxLife;
+            lightingEnabled = d.lightingEnabled;
+
+            colorHandler = DelegateConverter.GetDelegate(d.colorHandler, typeof(Color4InterpolationHandler)) as Color4InterpolationHandler;
+            speedHandler = DelegateConverter.GetDelegate(d.speedHandler, typeof(FloatInterpolationHandler)) as FloatInterpolationHandler;
+        }
+        public Type DescriptorType
+        {
+            get { return typeof(ParticleSystemDescriptor); }
+        }
+        public Descriptor<ParticleSystem> GetDescriptor
+        {
+            get 
+            {
+                var result = new ParticleSystemDescriptor();
+                result.colorHandler = DelegateConverter.GetName(colorHandler);
+                result.speedHandler = DelegateConverter.GetName(speedHandler);
+                result.constantForce = constantForce;
+                result.visualization = visualization;
+                result.speedRange = speedRange;
+                result.colorRange = colorRange;
+                result.lightingEnabled = lightingEnabled;
+                return result;
+            }
+        }
+        #endregion
+    }
+
+    public class ParticleSystemDescriptor : Descriptor<ParticleSystem>
+    {
+        public string colorHandler;
+        public ColorRange colorRange;
+        public string speedHandler;
+        public Range speedRange;
+
+        public Vector3 constantForce;
+        public IVisualization visualization;
+        public bool lightingEnabled = false;
+        public float maxLife;
     }
 
     /// <summary>

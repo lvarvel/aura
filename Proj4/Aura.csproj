@@ -104,7 +104,10 @@
     <Compile Include="Camera.cs" />
     <Compile Include="Color.cs" />
     <Compile Include="Content\ContentImporter.cs" />
+    <Compile Include="Content\DelegateConverter.cs" />
     <Compile Include="Content\Descriptor.cs" />
+    <Compile Include="Content\ParticleImporter.cs" />
+    <Compile Include="Content\XMLImporterBase.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="Engine.Input.cs" />
     <Compile Include="IDrawable.cs" />
@@ -123,7 +126,7 @@
     <Compile Include="Ranges.cs" />
     <Compile Include="UnitTest.cs" />
     <Compile Include="Vector3.cs" />
-    <Compile Include="Content\XMLSerializer.cs" />
+    <Compile Include="Content\XMLContentImporter.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

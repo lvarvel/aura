@@ -6,9 +6,24 @@ namespace Aura
 {
     public class Camera : Object3D
     {
+        Vector3 chasePoint;
+
+        public Camera() : base() { }
+        public Camera(Vector3 Position, Vector3 LookAt)
+        {
+            chasePoint = LookAt;
+            position = Position;
+        }
+
         public void ApplyCameraTransforms()
         {
-            //Todo: Camera
+            Gl.glMatrixMode(Gl.GL_PROJECTION);
+            Gl.glLoadIdentity();
+            Glu.gluPerspective(35.0f, 4 / 3, 1, 10000);
+
+            Gl.glMatrixMode(Gl.GL_MODELVIEW);
+            Gl.glLoadIdentity();
+            Glu.gluLookAt(position.X, position.Y, position.Z, chasePoint.X, chasePoint.Y, chasePoint.Z, 0, 1, 0);
         }
     }
 
