@@ -7,7 +7,7 @@ namespace Aura
     /// Represents a 3 dimentional vector
     /// </summary>
     [UnitTest(1)]
-    public class Vector3
+    public class Vector3 : IPoolable<float>
     {
         private float[] data;
 
@@ -157,6 +157,29 @@ namespace Aura
         {
             return "(" + X + "," + Y + "," + Z + ")";
         }
+
+        #region IPoolable Members
+        public void Build(params float[] parameters)
+        {
+            data[0] = parameters[0];
+            data[1] = parameters[1];
+            data[2] = parameters[2];
+        }
+
+        public void Clean()
+        {
+            data[0] = 0;
+            data[1] = 0;
+            data[2] = 0;
+        }
+
+        public void Build(params object[] parameters)
+        {
+            data[0] = (float)parameters[0];
+            data[1] = (float)parameters[1];
+            data[2] = (float)parameters[2];
+        }
+        #endregion
     }
 
     /// <summary>
@@ -174,5 +197,15 @@ namespace Aura
         }
 
         public static Vector2 One { get { return new Vector2(1,1); } }
+    }
+
+
+    /// <summary>
+    /// Simple static pool to avoid rapid alocation/realocation of vector3s
+    /// </summary>
+    public class Vector3Pool : Pool<Vector3>
+    {
+        public static readonly Vector3Pool Instance = new Vector3Pool();
+        private Vector3Pool() : base(10) { }
     }
 }

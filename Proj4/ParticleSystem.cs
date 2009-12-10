@@ -18,7 +18,7 @@ namespace Aura
         /// physics, especially when rigged with collision, make it a lot easier
         /// if we just encapsulate the useful physics data here.
         /// </summary>
-        protected class Particle
+        protected class Particle : IPoolable<float3>
         {
             public float3 position;
             /// <summary>
@@ -26,13 +26,51 @@ namespace Aura
             /// </summary>
             public float3 velocity;
             public float life;
+
+            public void Build(params float3[] paramters)
+            {
+                position = paramters[0];
+                velocity = paramters[1];
+                life = 0;
+            }
+
+            public void Clean()
+            {
+                position.x = 0;
+                position.y = 0;
+                position.z = 0;
+                velocity.x = 0;
+                velocity.y = 0;
+                velocity.z = 0;
+                life = 0;
+            }
+
+            public void Build(params object[] parameters)
+            {
+                position = (float3)parameters[0];
+                velocity = (float3)parameters[1];
+                life = 0;
+            }
         }
-        protected static Pool<Particle> particlePool = new Pool<Particle>();
+        protected static Pool<Particle> particlePool = new Pool<Particle>(100);
         protected struct float3
         {
             public float x;
             public float y;
             public float z;
+
+            public float3(float X, float Y, float Z)
+            {
+                x = X;
+                y = Y;
+                z = Z;
+            }
+            public float3(Vector3 v)
+            {
+                x = v.X;
+                y = v.Y;
+                z = v.Z;
+            }
 
             public static float3 operator +(float3 lhs, float3 rhs)
             {
@@ -55,6 +93,7 @@ namespace Aura
 
         #region Fields
         protected List<Particle> particles = new List<Particle>();
+        protected List<Emitter> emitters = new List<Emitter>();
 
         public Color4InterpolationHandler colorHandler;
         public ColorRange colorRange;
@@ -64,7 +103,12 @@ namespace Aura
         public Vector3 constantForce;
         public IVisualization visualization;
         public bool lightingEnabled = false;
-        public float maxLife;
+        public float maxLife { get; set; }
+        public int Count { get; set; }
+        public List<Emitter> Emitters 
+        { 
+            get { return emitters; } 
+        }
         #endregion
 
         #region Constructors
@@ -111,7 +155,15 @@ namespace Aura
                 args.Color = colorHandler(colorRange, f);
                 args._Material = null;
                 args.LightingEnabled = false;
+
+                visualization.Draw(args);
             }
+        }
+
+        public virtual void AddParticle(Vector3 position, Vector3 velocity)
+        {
+            //Grab particle from particle pool
+            particles.Add(particlePool.New<float3>(new float3(position), new float3(velocity)));
         }
 
         public virtual void Dispose()

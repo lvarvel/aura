@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Aura
 {
-    public class Color4 : ICloneable
+    public class Color4 : ICloneable, IPoolable<float>
     {
         public static readonly float MAX_VALUE = 255;
 
@@ -109,5 +107,40 @@ namespace Aura
         {
             return (object)(new Color4(this));
         }
+
+        #region IPoolable Members
+        public void Build(params float[] parameters)
+        {
+            values[0] = parameters[0];
+            values[1] = parameters[1];
+            values[2] = parameters[2];
+            values[3] = parameters[3];
+        }
+
+        public void Clean()
+        {
+            values[0] = 0;
+            values[1] = 0;
+            values[2] = 0;
+            values[3] = 0;
+        }
+
+        public void Build(params object[] parameters)
+        {
+            values[0] = (float)parameters[0];
+            values[1] = (float)parameters[1];
+            values[2] = (float)parameters[2];
+            values[3] = (float)parameters[3];
+        }
+        #endregion
+    }
+
+    /// <summary>
+    /// Simple static pool to avoid realocation of Color4s
+    /// </summary>
+    public class Color4Pool : Pool<Color4>
+    {
+        public static readonly Color4Pool Instance = new Color4Pool();
+        private Color4Pool() : base(10) { }
     }
 }

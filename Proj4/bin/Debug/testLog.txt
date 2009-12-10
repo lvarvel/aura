@@ -8,6 +8,14 @@ Test 1 success.
 Begining Test 2: Vector cross product
 Test 2 success.
 
+Begining test of Directional Clamp bitmask.
+Empty bitmask is zero
+Starting test 1
+Test 1 success. Clamp is reflexive.
+Starting test 2
+Test 2 success. Dimentional/Polar
+ options interoperate correctly.
+
 Begining XMLImporterBase test.
 Begining xml content export test.
 Content has been exported.

@@ -18,9 +18,13 @@ namespace Aura
         internal string windowName;
         public bool Disposed = false;
 
+        internal TimerManager timerManager = TimerManager.Instance;
+
         //Debug
         Model m;
         Billboard b;
+        Emitter e;
+        ParticleSystem ps;
 
         public Engine(int screenWidth = 800, int screenHeight = 600, string window_name = "Aura Particle Simulator")
         {
@@ -38,48 +42,49 @@ namespace Aura
             Prime();
             Running = true;
             Sdl.SDL_Event sdlEvent;
+
+            #region Game Loop
             while (Running)
             {
                 Sdl.SDL_PollEvent(out sdlEvent);
                 this.HandleInput(sdlEvent);
 
-                Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
+                timerManager.Update();
                 Update();
+                Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
                 Draw();
 
-                try 
-                { 
-                    if(!Disposed)
-                        Sdl.SDL_GL_SwapBuffers(); 
-                }
-                catch (AccessViolationException e) {  }
+                if(!Disposed)
+                    Sdl.SDL_GL_SwapBuffers(); 
             }
+            #endregion
         }
 
         public void Draw()
         {
-            
             CameraManager.Current.ApplyCameraTransforms();
             Gl.glPushMatrix();
            
             LightManager.ApplyLighting();
             Gl.glPopMatrix();
-            Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
+
             Gl.glPushMatrix();
             //Debug
             
             //Glu.gluSphere(Glu.gluNewQuadric(), 1, 36, 36);
             //m.Draw();
-            DrawArgs args = new DrawArgs(new Vector3(0, 0, 0), new Color4(1, 1, 1, 1));
-            
-            b.Draw(args);
 
+            ps.Draw();
 
             Gl.glPopMatrix();
         }
         public void Update()
         {
+            //Debug Lighting
             //m.rotation = m.rotation * new Quaternion(.03f, 0,1,0 );
+
+            //Debug particles
+            ps.Update();
         }
 
         /// <summary>
@@ -87,13 +92,16 @@ namespace Aura
         /// </summary>
         internal void Prime()
         {
+            #region Initialize SDL
             if (Sdl.SDL_Init(Sdl.SDL_INIT_VIDEO) != 0) throw new AuraEngineException("SDL failure: " + Sdl.SDL_GetError());
             Sdl.SDL_GL_SetAttribute(Sdl.SDL_GL_DOUBLEBUFFER, 1);
 
             screen = Sdl.SDL_SetVideoMode(x, y, 16, Sdl.SDL_OPENGL | Sdl.SDL_DOUBLEBUF);
             if (screen == IntPtr.Zero) throw new AuraEngineException("Unable to set video mode: " + Sdl.SDL_GetError());
             Sdl.SDL_WM_SetCaption(windowName,windowName);
+            #endregion
 
+            #region Initialize openGL
             Gl.glViewport(0, 0, x, y);
             Gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
@@ -102,16 +110,19 @@ namespace Aura
             Gl.glEnable(Gl.GL_DEPTH_TEST);
             Gl.glShadeModel(Gl.GL_SMOOTH);
             Gl.glEnable(Gl.GL_TEXTURE_2D);
-            //Initialize ilut
+            #endregion
+
+            #region Initialize ilut
             Il.ilInit();
             Ilu.iluInit();
             Ilut.ilutInit();
             Ilu.iluImageParameter(Ilu.ILU_PLACEMENT, Ilu.ILU_UPPER_LEFT);
             Ilut.ilutRenderer(Ilut.ILUT_OPENGL);
-            
+            #endregion
 
             CameraManager.SetCamera("Default", new Camera(new Vector3(10, 0, 10), new Vector3(0, 0, 0)));
 
+            #region DEBUG
             //DEBUG: LIGHTING (BROKEN)
             LightManager.LightingEnabled = false;
             Material lmaterial = new Material(new Color4(.1f, .1f, .1f, .1f), new Color4(1,0,0), new Color4(1,1,1), .1f);
@@ -121,7 +132,13 @@ namespace Aura
             m = new Model(Mesh.Cube);
 
             //Debug: Particles
-
+            Texture t = ImageImporter.Instance.ImportContent("Data/jet.jpg");
+            b = new Billboard(t, BillboardLockType.Spherical);
+            ps = new ParticleSystem(300, b, FunctionAssets.LinearInterpolation, new ColorRange(new Color4(1, 1, 1)), FunctionAssets.LinearInterpolation, new Range(.1f));
+            ps.Count = 5;
+            ParticleSystem[] tps = { ps };
+            e = new EmitterBase(1, tps, DirectionalClamp.ZeroClamp, null, true);
+            #endregion
         }
 
         public string WindowName
