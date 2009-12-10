@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 
-namespace Aura
+namespace Aura.Core
 {
     public class TimerManager : ITimedEntity
     {

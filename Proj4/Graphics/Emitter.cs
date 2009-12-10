@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Tao.OpenGl;
+using Aura.Core;
 
-namespace Aura
+namespace Aura.Graphics
 {
     /// <summary>
     /// Class that describes an emitter

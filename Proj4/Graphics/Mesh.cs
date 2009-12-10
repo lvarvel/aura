@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using Tao.OpenGl;
 using Aura.Content;
+using Aura.Core;
 
-namespace Aura
+namespace Aura.Graphics
 {
     public class Mesh : IDrawable, ICloneable
     {

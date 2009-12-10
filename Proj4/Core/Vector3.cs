@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Aura
+namespace Aura.Core
 {
     /// <summary>
     /// Represents a 3 dimentional vector

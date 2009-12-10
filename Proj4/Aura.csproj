@@ -99,41 +99,41 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Arrays.cs" />
-    <Compile Include="Billboard.cs" />
-    <Compile Include="Camera.cs" />
-    <Compile Include="Color.cs" />
+    <Compile Include="Core\Arrays.cs" />
+    <Compile Include="Graphics\Billboard.cs" />
+    <Compile Include="Core\Camera.cs" />
+    <Compile Include="Core\Color.cs" />
     <Compile Include="Content\ContentImporter.cs" />
     <Compile Include="Content\DelegateConverter.cs" />
     <Compile Include="Content\Descriptor.cs" />
     <Compile Include="Content\ParticleImporter.cs" />
     <Compile Include="Content\XMLImporterBase.cs" />
-    <Compile Include="Emitter.cs" />
-    <Compile Include="Engine.cs" />
-    <Compile Include="Engine.Input.cs" />
-    <Compile Include="IHasID.cs" />
-    <Compile Include="IDrawable.cs" />
-    <Compile Include="Image.cs" />
-    <Compile Include="Light.cs" />
-    <Compile Include="Material.cs" />
-    <Compile Include="Mesh.cs" />
-    <Compile Include="Model.cs" />
-    <Compile Include="Object3D.cs" />
-    <Compile Include="ParticleAssets.cs" />
-    <Compile Include="ParticleSystem.cs">
+    <Compile Include="Graphics\Emitter.cs" />
+    <Compile Include="Core\Engine.cs" />
+    <Compile Include="Core\Engine.Input.cs" />
+    <Compile Include="Core\IHasID.cs" />
+    <Compile Include="Core\IDrawable.cs" />
+    <Compile Include="Graphics\Image.cs" />
+    <Compile Include="Graphics\Light.cs" />
+    <Compile Include="Graphics\Material.cs" />
+    <Compile Include="Graphics\Mesh.cs" />
+    <Compile Include="Core\Model.cs" />
+    <Compile Include="Core\Object3D.cs" />
+    <Compile Include="Graphics\ParticleAssets.cs" />
+    <Compile Include="Graphics\ParticleSystem.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="PointVisualization.cs" />
-    <Compile Include="Pool.cs" />
+    <Compile Include="Graphics\PointVisualization.cs" />
+    <Compile Include="Core\Pool.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Quaternion.cs" />
-    <Compile Include="Ranges.cs" />
-    <Compile Include="Timer.cs" />
-    <Compile Include="TimerManager.cs" />
-    <Compile Include="UnitTest.cs" />
-    <Compile Include="Util.cs" />
-    <Compile Include="Vector3.cs" />
+    <Compile Include="Core\Quaternion.cs" />
+    <Compile Include="Core\Ranges.cs" />
+    <Compile Include="Core\Timer.cs" />
+    <Compile Include="Core\TimerManager.cs" />
+    <Compile Include="Core\UnitTest.cs" />
+    <Compile Include="Core\Util.cs" />
+    <Compile Include="Core\Vector3.cs" />
     <Compile Include="Content\XMLContentImporter.cs" />
   </ItemGroup>
   <ItemGroup />

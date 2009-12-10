@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Text;
 using System.IO;
 
-namespace Aura
+namespace Aura.Core
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple=false, Inherited=false)]
     public class UnitTest : Attribute

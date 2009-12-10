@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using Tao.OpenGl;
 using Tao.Sdl;
 using Tao.DevIl;
+using Aura.Graphics;
 
-namespace Aura
+namespace Aura.Core
 {
     /// <summary>
     /// Class that encapsulates the current program status.

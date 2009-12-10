@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Aura
+namespace Aura.Core
 {
     public static class Util
     {

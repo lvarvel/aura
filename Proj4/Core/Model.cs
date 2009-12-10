@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Tao.OpenGl;
+using Aura.Graphics;
 
-namespace Aura
+namespace Aura.Core
 {
     public class Model : Object3D, IDrawable
     {

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Aura.Core;
 
-namespace Aura
+namespace Aura.Graphics
 {
     public static class FunctionAssets
     {

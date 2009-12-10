@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Tao.Sdl;
 
-namespace Aura
+namespace Aura.Core
 {
     public partial class Engine
     {

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Aura.Content;
+using Aura.Core;
 
-namespace Aura
+namespace Aura.Graphics
 {
     /// <summary>
     /// Represents an instance of a single effect particle system.  To combine

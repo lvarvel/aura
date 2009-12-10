@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Aura
+namespace Aura.Core
 {
     /// <summary>
     /// WARNING: Quaternion might not work quite right yet, but it should

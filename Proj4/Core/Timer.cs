@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace Aura
+namespace Aura.Core
 {
     /// <summary>
     /// Class provides basic timing functionality

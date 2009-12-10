@@ -4,7 +4,7 @@ using Aura.Content;
 using Tao.DevIl;
 using Tao.OpenGl;
 
-namespace Aura
+namespace Aura.Graphics
 {
     public class Texture : IDisposable
     {

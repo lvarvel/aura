@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Tao.OpenGl;
 
-namespace Aura
+namespace Aura.Core
 {
     public class Camera : Object3D
     {
