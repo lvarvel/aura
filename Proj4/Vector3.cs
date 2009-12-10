@@ -98,6 +98,12 @@ namespace Aura
             result.Z = X * rhs.Y - Y * rhs.X;
             return result;
         }
+        public void AssignValues(float x, float y, float z)
+        {
+            data[0] = x;
+            data[1] = y;
+            data[2] = z;
+        }
 
         [UnitTestMethod]
         public static void TestVector(TestResults results)

@@ -102,6 +102,7 @@ namespace Aura
             Gl.glEnable(Gl.GL_DEPTH_TEST);
             Gl.glShadeModel(Gl.GL_SMOOTH);
             Gl.glEnable(Gl.GL_TEXTURE_2D);
+            //Initialize ilut
             Il.ilInit();
             Ilu.iluInit();
             Ilut.ilutInit();
@@ -111,7 +112,7 @@ namespace Aura
 
             CameraManager.SetCamera("Default", new Camera(new Vector3(10, 0, 10), new Vector3(0, 0, 0)));
 
-            //DEBUG
+            //DEBUG: LIGHTING (BROKEN)
             LightManager.LightingEnabled = false;
             Material lmaterial = new Material(new Color4(.1f, .1f, .1f, .1f), new Color4(1,0,0), new Color4(1,1,1), .1f);
             Light l = new Light(lmaterial, false);
@@ -119,11 +120,8 @@ namespace Aura
             LightManager.Lights.Add(l);
             m = new Model(Mesh.Cube);
 
-            //DEBUG: Billboards
-            Texture t = ImageImporter.Instance.ImportContent("Data/jet.jpg");
-            b = new Billboard(t);
+            //Debug: Particles
 
-            
         }
 
         public string WindowName

@@ -13,7 +13,6 @@ namespace Aura
                 case Sdl.SDL_QUIT:
                     Dispose();
                     return;
-                    break;
                 case Sdl.SDL_KEYDOWN:
                     if (sdl_event.key.keysym.sym == Sdl.SDLK_ESCAPE)
                     {

@@ -21,6 +21,9 @@ namespace Aura
         protected class Particle
         {
             public float3 position;
+            /// <summary>
+            /// Note: Be careful of the magnitude of this vector
+            /// </summary>
             public float3 velocity;
             public float life;
         }
@@ -30,6 +33,23 @@ namespace Aura
             public float x;
             public float y;
             public float z;
+
+            public static float3 operator +(float3 lhs, float3 rhs)
+            {
+                float3 result = new float3();
+                result.x = lhs.x + rhs.x;
+                result.y = lhs.y + rhs.y;
+                result.z = lhs.z + rhs.z;
+                return result;
+            }
+            public static float3 operator *(float3 lhs, float rhs)
+            {
+                float3 result = new float3();
+                result.x = lhs.x * rhs;
+                result.y = lhs.y * rhs;
+                result.z = lhs.z * rhs;
+                return result;
+            }
         }
         #endregion
 
@@ -67,16 +87,30 @@ namespace Aura
         #region Methods
         public virtual void Update()
         {
-            //TODO
+            foreach (Particle p in particles)
+            {
+                float f = p.life / maxLife;
+                float v = speedHandler(speedRange, f);
+                p.position += p.velocity * v;
+            }
         }
 
         public virtual void Draw()
         {
             DrawArgs args = new DrawArgs(new Vector3(), Color4.White);
+            Vector3 s = new Vector3();
+            Vector3 v = new Vector3();
+            args.Position = s;
+            args.Vector = v;
+
             foreach (Particle p in particles)
             {
+                s.AssignValues(p.position.x, p.position.y, p.position.z);
+                v.AssignValues(p.velocity.x, p.velocity.y, p.velocity.z);
                 float f = p.life / maxLife;
-                
+                args.Color = colorHandler(colorRange, f);
+                args._Material = null;
+                args.LightingEnabled = false;
             }
         }
 
